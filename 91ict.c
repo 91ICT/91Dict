@@ -22,7 +22,7 @@ void foldoc_load_2_tree(BTA *tree, const char *foldoc_file){
      char word[100],
           mean[10000];
      char temp[100];
-     while(!feof(F))
+     while(!feof(f))
      {
           fgets(temp, 100, f);
           if(temp[0] != '\t' && temp[0] != '\n')
@@ -45,7 +45,7 @@ void foldoc_load_2_tree(BTA *tree, const char *foldoc_file){
           } // mean
           else strcat(mean, temp);
      }
-     defn[strlen(mean)-1] = '\0';
+     mean[strlen(mean)-1] = '\0';
      btins(tree, word, mean, sizeof(mean));
      fclose(f);
 }
