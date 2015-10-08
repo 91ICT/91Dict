@@ -1,24 +1,28 @@
-CC     = gcc
-CFLAGS = `pkg-config --cflags gtk+-3.0 gmodule-2.0`
-LIBS   = `pkg-config --libs   gtk+-3.0 gmodule-2.0`
-DEBUG  = -Wall -g
-INC = ./inc
-LIB = ./lib
-LFLAGS = -lbt
-OBJECTS = main.o callbacks.o
+CC          = gcc
+CFLAGS      = `pkg-config --cflags gtk+-3.0 gmodule-2.0`
+LIBS        = `pkg-config --libs   gtk+-3.0 gmodule-2.0` -lbt
+INC         = ./inc
+LIB         = ./lib
+SRCS        = 91ict.c  main.c callbacks.c
+OBJS        = $(SRCS:.c=.o)
+EXECUTABLE  = 91Dict
 
-.PHONY: clean
+all: $(SRCS) $(EXECUTABLE)
 
-all: 91Dict
+debug: CFLAGS += -g -Wall
+debug: clean $(SRCS) $(EXECUTABLE)
 
-91Dict: $(OBJECTS)
-	$(CC) $(DEBUG) $(OBJECTS) -o $@ $(LIBS) -I$(INC) -L$(LIB) $(LFLAGS)
+profiling: CFLAGS += -pg
+profiling: all
 
-main.o: main.c support.h
-	$(CC) $(DEBUG) $(CFLAGS) -c $< -o $@ -I$(INC) -L$(LIB) $(LFLAGS)
+$(EXECUTABLE): $(OBJS)
+	$(CC) -I$(INC) $(CFLAGS) $(OBJS) -o $@  -L$(LIB) $(LIBS)
 
-callbacks.o: callbacks.c support.h
-	$(CC) $(DEBUG) $(CFLAGS) -c $< -o $@ -I$(INC) -L$(LIB) $(LFLAGS)
+.c.o:
+	$(CC) -I$(INC) $(CFLAGS) -c $< -o $@ -L$(LIB) $(LIBS)
 
 clean:
-	rm -f *.o 91Dict
+	rm -rf *.o $(EXECUTABLE) dict_db
+
+remake: clean all
+reprofiling: clean profiling
