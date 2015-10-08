@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.16.1 -->
+<!-- Generated with glade 3.18.3 -->
 <interface>
   <requires lib="gtk+" version="3.10"/>
   <object class="GtkAboutDialog" id="dlg_About">
@@ -11,7 +11,6 @@
     <property name="destroy_with_parent">True</property>
     <property name="icon_name">dialog-information</property>
     <property name="type_hint">menu</property>
-    <property name="has_resize_grip">False</property>
     <property name="program_name">91Dict</property>
     <property name="version">1.0.0</property>
     <property name="comments" translatable="yes">91Dict Project for Data Structure and Algorithm Advanced course by 91 ICT team, Hanoi University of Science and Technology</property>
@@ -75,7 +74,6 @@
     <property name="destroy_with_parent">True</property>
     <property name="icon_name">address-book-new</property>
     <property name="type_hint">normal</property>
-    <property name="has_resize_grip">False</property>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox1">
         <property name="can_focus">False</property>
@@ -86,7 +84,7 @@
             <property name="can_focus">False</property>
             <property name="layout_style">end</property>
             <child>
-              <object class="GtkButton" id="btn_Cancel_add">
+              <object class="GtkButton" id="btn_Cancel_adddlg">
                 <property name="label" translatable="yes">  Cancel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -103,7 +101,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="btn_Add_2">
+              <object class="GtkButton" id="btn_Add_adddlg">
                 <property name="label" translatable="yes">  Add</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -130,6 +128,8 @@
           <object class="GtkGrid" id="grid2">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="row_spacing">6</property>
+            <property name="column_spacing">7</property>
             <child>
               <object class="GtkLabel" id="label_Word">
                 <property name="visible">True</property>
@@ -139,8 +139,6 @@
               <packing>
                 <property name="left_attach">0</property>
                 <property name="top_attach">0</property>
-                <property name="width">1</property>
-                <property name="height">1</property>
               </packing>
             </child>
             <child>
@@ -152,34 +150,31 @@
               <packing>
                 <property name="left_attach">0</property>
                 <property name="top_attach">1</property>
-                <property name="width">1</property>
-                <property name="height">1</property>
               </packing>
             </child>
             <child>
-              <object class="GtkEntry" id="entry_Word">
+              <object class="GtkEntry" id="add_word_entry">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
               </object>
               <packing>
                 <property name="left_attach">1</property>
                 <property name="top_attach">0</property>
-                <property name="width">1</property>
-                <property name="height">1</property>
               </packing>
             </child>
             <child>
-              <object class="GtkTextView" id="txt_meaning">
+              <object class="GtkTextView" id="add_meaning_txt">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="hexpand">True</property>
                 <property name="vexpand">True</property>
+                <property name="pixels_below_lines">149</property>
+                <property name="wrap_mode">word-char</property>
+                <property name="justification">fill</property>
               </object>
               <packing>
                 <property name="left_attach">1</property>
                 <property name="top_attach">1</property>
-                <property name="width">1</property>
-                <property name="height">1</property>
               </packing>
             </child>
           </object>
@@ -224,7 +219,7 @@
             <property name="can_focus">False</property>
             <property name="layout_style">end</property>
             <child>
-              <object class="GtkButton" id="btn_Cancel_delete">
+              <object class="GtkButton" id="btn_cancel_deletedlg">
                 <property name="label" translatable="yes">  Cancel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -239,7 +234,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="btn_Delete_delete">
+              <object class="GtkButton" id="btn_delete_deletedlg">
                 <property name="label" translatable="yes">  Delete</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -278,12 +273,12 @@
     <property name="default_width">800</property>
     <property name="default_height">600</property>
     <property name="icon_name">accessories-dictionary</property>
-    <property name="has_resize_grip">False</property>
     <signal name="destroy" handler="on_main_window_destroy" swapped="no"/>
     <child>
       <object class="GtkGrid" id="grid1">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
+        <property name="column_spacing">7</property>
         <child>
           <object class="GtkButtonBox" id="btnbox_Logo">
             <property name="visible">True</property>
@@ -311,8 +306,6 @@
           <packing>
             <property name="left_attach">0</property>
             <property name="top_attach">0</property>
-            <property name="width">1</property>
-            <property name="height">1</property>
           </packing>
         </child>
         <child>
@@ -323,24 +316,6 @@
             <property name="homogeneous">True</property>
             <property name="baseline_position">top</property>
             <property name="layout_style">spread</property>
-            <child>
-              <object class="GtkComboBoxText" id="cmbtxt_Language">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="can_default">True</property>
-                <property name="has_default">True</property>
-                <property name="active">0</property>
-                <items>
-                  <item id="lang_Eng_Vie" translatable="yes">Eng-Vie</item>
-                  <item id="lang_Vie_Eng" translatable="yes">Vie_Eng</item>
-                </items>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
             <child>
               <object class="GtkButton" id="btn_Add">
                 <property name="label" translatable="yes">  Add</property>
@@ -424,8 +399,6 @@
           <packing>
             <property name="left_attach">1</property>
             <property name="top_attach">0</property>
-            <property name="width">1</property>
-            <property name="height">1</property>
           </packing>
         </child>
         <child>
@@ -433,8 +406,9 @@
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="orientation">vertical</property>
+            <property name="spacing">3</property>
             <child>
-              <object class="GtkSearchEntry" id="search">
+              <object class="GtkSearchEntry" id="search_word">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="primary_icon_name">edit-find-symbolic</property>
@@ -452,6 +426,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="shadow_type">in</property>
+                <property name="min_content_height">315</property>
                 <child>
                   <object class="GtkTreeView" id="tree_Completion">
                     <property name="visible">True</property>
@@ -459,8 +434,10 @@
                     <property name="hexpand">True</property>
                     <property name="vexpand">True</property>
                     <property name="hscroll_policy">natural</property>
+                    <property name="level_indentation">2</property>
+                    <property name="enable_grid_lines">horizontal</property>
                     <child internal-child="selection">
-                      <object class="GtkTreeSelection" id="treeview-selection1"/>
+                      <object class="GtkTreeSelection" id="treeview_word"/>
                     </child>
                   </object>
                 </child>
@@ -475,8 +452,6 @@
           <packing>
             <property name="left_attach">0</property>
             <property name="top_attach">1</property>
-            <property name="width">1</property>
-            <property name="height">1</property>
           </packing>
         </child>
         <child>
@@ -484,15 +459,18 @@
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="shadow_type">in</property>
+            <property name="min_content_height">350</property>
             <child>
-              <object class="GtkTextView" id="txt_Meaning">
+              <object class="GtkTextView" id="txt_meaning">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="hexpand">True</property>
                 <property name="vexpand">True</property>
-                <property name="pixels_above_lines">10</property>
                 <property name="pixels_inside_wrap">20</property>
                 <property name="editable">False</property>
+                <property name="wrap_mode">char</property>
+                <property name="justification">right</property>
+                <property name="indent">-1</property>
                 <property name="cursor_visible">False</property>
                 <property name="accepts_tab">False</property>
               </object>
@@ -501,8 +479,6 @@
           <packing>
             <property name="left_attach">1</property>
             <property name="top_attach">1</property>
-            <property name="width">1</property>
-            <property name="height">1</property>
           </packing>
         </child>
       </object>
