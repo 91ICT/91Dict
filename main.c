@@ -48,11 +48,10 @@ main(int argc, char** argv)
      GW(tree_completion);
      GW(search_word);
      GW(txt_meaning);
-     GW(list_store);
      data->tree = tree;
      /* Get more objects to use */
 #undef GW
-
+     CH_GET_OBJECT(builder, list_store, GTK_LIST_STORE, data);
      /* Connect signals */
      gtk_builder_connect_signals(builder, data);
 

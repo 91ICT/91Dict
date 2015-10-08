@@ -24,7 +24,7 @@ struct _ChData
      GtkWidget *tree_completion;
      GtkWidget *search_word;
      GtkWidget *txt_meaning;
-     GtkWidget *list_store;
+     GtkListStore *list_store;
      BTA *tree; //  tree
      /* Insert more widgets to use */
 };
