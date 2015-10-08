@@ -17,11 +17,16 @@ int check_file_exist(const char *file_name){
 void foldoc_load_2_tree(BTA *tree, const char *foldoc_file){
      FILE *f;
      f = fopen(foldoc_file, "r");
-
+     if(f == NULL){
+          fprintf(stderr, "ERROR: NULL value %s:%d\n", __FILE__, __LINE__);
+          exit(1);
+     }
+     
      int n=0;
      char word[100],
-          mean[10000];
+          mean[100000];
      char temp[100];
+
      while(!feof(f))
      {
           fgets(temp, 100, f);
@@ -44,8 +49,10 @@ void foldoc_load_2_tree(BTA *tree, const char *foldoc_file){
                }
           } // mean
           else strcat(mean, temp);
+
      }
      mean[strlen(mean)-1] = '\0';
-     btins(tree, word, mean, sizeof(mean));
+     btins(tree, word, mean, strlen(mean)+1);
+     
      fclose(f);
 }
