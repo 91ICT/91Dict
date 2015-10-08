@@ -3,6 +3,7 @@
 
 #include <gtk/gtk.h>
 #include <btree.h>
+
 /* Macros for obtaining objects from UI file */
 #define CH_GET_OBJECT( builder, name, type, data ) \
      data->name = type ( gtk_builder_get_object(builder, #name ))
@@ -20,9 +21,10 @@ struct _ChData
      GtkWidget *dlg_Delete;  /* Delete dialog */
      GtkWidget *word_entry_add_dlg; // add 
      GtkWidget *meaning_txt_add_dlg;
-     GtkWidget *word_tree;
+     GtkWidget *tree_completion;
      GtkWidget *search_word;
      GtkWidget *txt_meaning;
+     GtkWidget *list_store;
      BTA *tree; //  tree
      /* Insert more widgets to use */
 };
