@@ -10,4 +10,7 @@ int check_file_exist(const char *file_name);
 // create db file from foldoc data file
 void foldoc_load_2_tree(BTA *tree, const char *foldoc_file);
 
+// soundex find similar string
+char *soundex(const char *in);
+
 #endif
