@@ -430,7 +430,7 @@
                 <property name="shadow_type">in</property>
                 <property name="min_content_height">308</property>
                 <child>
-                  <object class="GtkTreeView" id="tree_completion">
+                  <object class="GtkTreeView" id="tree_view">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="model">list_store</property>

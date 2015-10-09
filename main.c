@@ -45,7 +45,7 @@ main(int argc, char** argv)
 
      GW(word_entry_add_dlg);
      GW(meaning_txt_add_dlg);
-     GW(tree_completion);
+     GW(tree_view);
      GW(search_word);
      GW(txt_meaning);
      data->tree = tree;
