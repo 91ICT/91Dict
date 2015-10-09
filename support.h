@@ -2,6 +2,10 @@
 #define __SUPPORT_H__
 
 #include <gtk/gtk.h>
+#ifdef TRUE
+#undef TRUE
+#undef FALSE
+#endif
 #include <btree.h>
 
 /* Macros for obtaining objects from UI file */
@@ -21,7 +25,7 @@ struct _ChData
      GtkWidget *dlg_Delete;  /* Delete dialog */
      GtkWidget *word_entry_add_dlg; // add 
      GtkWidget *meaning_txt_add_dlg;
-     GtkWidget *tree_completion;
+     GtkWidget *tree_view;
      GtkWidget *search_word;
      GtkWidget *txt_meaning;
      GtkListStore *list_store;
