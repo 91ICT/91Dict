@@ -8,13 +8,14 @@
 G_MODULE_EXPORT void
 on_main_window_destroy(GtkWidget *main_window)
 {
-		 gtk_main_quit();
+	gtk_main_quit();
 }
-
 
 /***********************
  *     MAIN WINDOW     *
  ***********************/
+
+ // for tree_view_selection
 G_MODULE_EXPORT void 
 on_changed(GtkTreeSelection *treeselection, ChData *data) {
 
@@ -24,8 +25,8 @@ on_changed(GtkTreeSelection *treeselection, ChData *data) {
 
   if (gtk_tree_selection_get_selected(treeselection, &model, &iter)) {
 
-    gtk_tree_model_get(model, &iter, 0, &word,  -1);
-   	int rsize;
+	gtk_tree_model_get(model, &iter, 0, &word,  -1);
+	int rsize;
 	char meaning[100000];
 	GtkTextBuffer *Buffer;
 	Buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(data->txt_meaning));
@@ -34,11 +35,11 @@ on_changed(GtkTreeSelection *treeselection, ChData *data) {
 	if (btsel(data->tree_word, word, meaning, sizeof(meaning), &rsize) == 0)
 		gtk_text_buffer_set_text(Buffer, meaning, -1);
 
-    g_free(word);
+	g_free(word);
   }
 }
 
-// The “search-changed” signal
+// The “search-changed” signal fpr search entry
 G_MODULE_EXPORT void 
 func_search_word (GtkSearchEntry *entry, ChData *data){
 	gchar *search_word = gtk_entry_get_text(GTK_ENTRY(entry));
@@ -50,10 +51,13 @@ func_search_word (GtkSearchEntry *entry, ChData *data){
 	
 	int rsize;
 	char meaning[100000];
-	if (btsel(data->tree_word, search_word, meaning, sizeof(meaning), &rsize) == 0)
-			gtk_text_buffer_set_text(Buffer, meaning, -1);
-	else{
-
+	if (btsel(data->tree_word, search_word, meaning, sizeof(meaning), &rsize) == 0){
+		gtk_list_store_clear(data->list_store);
+		GtkTreeIter  iter;
+		gtk_list_store_append(data->list_store, &iter);
+		gtk_list_store_set (data->list_store, &iter, 0, search_word, -1);
+		gtk_text_buffer_set_text(Buffer, meaning, -1);
+	} else {
 			char *soundex_str = soundex(search_word);
 			char series_word[10000];
 			int size_series_word_rev;
@@ -116,9 +120,9 @@ on_btn_Delete_clicked(GtkButton *btn_Delete, ChData *data)
  on_btn_Cancel_add_clicked(GtkButton *btn_Cancel_add, ChData *data)
  {
 
-      gtk_widget_hide(data->dlg_Add);     
-      reset_Entry(data->word_entry_add_dlg);
-      reset_TextView(data->meaning_txt_add_dlg);
+	gtk_widget_hide(data->dlg_Add);     
+	reset_Entry(data->word_entry_add_dlg);
+	reset_TextView(data->meaning_txt_add_dlg);
  }
 
 
@@ -143,9 +147,14 @@ on_btn_Add_add_clicked(GtkButton *btn_Add_add, ChData *data)
 	}
 	/* reset text field */
 	reset_Entry(data->word_entry_add_dlg);
-    reset_TextView(data->meaning_txt_add_dlg);
+	reset_TextView(data->meaning_txt_add_dlg);
 
-    /* free memory */
-    g_free(meaning);
-    //g_free(word);
+	/* free memory */
+	g_free(meaning);
+	//g_free(word);
 }
+/*************************
+*      EDIT DIALOG       *
+**************************/
+
+
