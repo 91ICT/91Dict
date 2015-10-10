@@ -30,4 +30,12 @@ gboolean delete_word_from_dict(ChData *data, char *word, char *mean);
 // Support for get list of word have same soundex string on value of string
 list_word *parse_soundex_val(char *soundex_val, int *size);
 
+/* Clear the Entry */
+void reset_Entry(GtkWidget *Entry);
+
+/* Clear the TextView */
+void reset_TextView(GtkWidget *TextView);
+
+void status_dialog(GtkWindow *parent, gchar *message);
+
 #endif

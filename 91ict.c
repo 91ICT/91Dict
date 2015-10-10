@@ -294,3 +294,28 @@ end:
 	} 
 	return FALSE;
 }
+
+/* Clear the Entry */
+void reset_Entry(GtkWidget *Entry)
+{
+	GtkEntryBuffer *buffer = gtk_entry_buffer_new (NULL, 0);
+	gtk_entry_set_buffer( (GtkEntry*) Entry, buffer);
+}
+
+/* Clear the TextView */
+void reset_TextView(GtkWidget *TextView)
+{
+	GtkTextBuffer *buffer = gtk_text_buffer_new(NULL);
+	gtk_text_view_set_buffer( (GtkTextView*) TextView, buffer);
+}
+
+void status_dialog(GtkWindow *parent, gchar *message)
+{
+	GtkWidget *dialog;
+	dialog = gtk_message_dialog_new(parent,
+		GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
+		GTK_MESSAGE_INFO, GTK_BUTTONS_CLOSE, message);
+	gtk_window_set_title(GTK_WINDOW(dialog), "Status");
+	gtk_dialog_run(GTK_DIALOG(dialog));
+    gtk_widget_destroy(dialog);
+}
