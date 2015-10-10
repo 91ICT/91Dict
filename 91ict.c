@@ -156,7 +156,8 @@ gboolean add_word_to_dict(ChData *data, char *word, char *mean){
 
 	if(btsel(data->tree_word, word, mean_rev, sizeof(mean_rev), &size_mean_rev) != 0){
 		// Don't word on tree_word
-		btins(data->tree_word, word, mean, strlen(mean) + 1);
+		if(btins(data->tree_word, word, mean, strlen(mean) + 1) != 0)
+			return FALSE;
 
 		char *soundex_str = soundex(word);
 		char series_word[200000];
@@ -164,13 +165,15 @@ gboolean add_word_to_dict(ChData *data, char *word, char *mean){
 
 		if(btsel(data->tree_soundex, soundex_str, series_word, sizeof(series_word), &size_series_word_rev) != 0){
 			// Don't soundex_str on soundex_tree 
-			btins(data->tree_soundex, soundex_str, word, strlen(word) + 1);
+			if(btins(data->tree_soundex, soundex_str, word, strlen(word) + 1) != 0)
+				return FALSE;
 		} else {
 			// have soundex_str on soundex_tree 
 			char separated[100] = ";";
 			strcat(separated, word);
 			strcat(series_word, separated);
-			btupd(data->tree_soundex, soundex_str, series_word, strlen(series_word) + 1);
+			if(btupd(data->tree_soundex, soundex_str, series_word, strlen(series_word) + 1) != 0)
+				return FALSE;
 		}
 		free(soundex_str);
 
