@@ -114,7 +114,6 @@ on_btn_edit_clicked(GtkButton *btn_Add, ChData *data)
 	if (gtk_tree_selection_get_selected(data->tree_view_selection, &model, &iter)) {
 
 		gtk_tree_model_get(model, &iter, 0, &word,  -1);
-		g_print("!!!!!!!%s\n", word);
 		gtk_label_set_text(GTK_LABEL(data->word_label_edit_dlg), word);
 		gtk_dialog_run(GTK_DIALOG(data->dlg_edit));
 		gtk_widget_hide(data->dlg_edit);
