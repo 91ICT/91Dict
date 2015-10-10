@@ -11,7 +11,7 @@ main(int argc, char** argv)
      GError     *error = NULL;
 
      /* Init btree */
-     BTA *tree;
+     BTA *tree_word, *tree_soundex;
      btinit();
 
      if(check_file_exist("dict_db"))
@@ -48,7 +48,8 @@ main(int argc, char** argv)
      GW(tree_view);
      GW(search_word);
      GW(txt_meaning);
-     data->tree = tree;
+     data->tree_word = tree_word;
+     ata->tree_soundex = tree_soundex;
      /* Get more objects to use */
 #undef GW
      CH_GET_OBJECT(builder, list_store, GTK_LIST_STORE, data);

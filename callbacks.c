@@ -31,7 +31,7 @@ func_search_word (GtkSearchEntry *entry, ChData *data){
     // mark = gtk_text_buffer_get_insert (buffer);
     // gtk_text_buffer_get_iter_at_mark (buffer, &iter, mark);
 
-    if (btsel(data->tree, search_word, meaning, sizeof(meaning), &rsize) == 0)
+    if (btsel(data->tree_word, search_word, meaning, sizeof(meaning), &rsize) == 0)
     		gtk_text_buffer_set_text(clear, meaning, -1);
 
 
