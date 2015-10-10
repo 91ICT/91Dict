@@ -15,46 +15,68 @@ on_main_window_destroy(GtkWidget *main_window)
 /***********************
  *     MAIN WINDOW     *
  ***********************/
+G_MODULE_EXPORT void 
+on_changed(GtkTreeSelection *treeselection, ChData *data) {
+
+  GtkTreeIter iter;
+  GtkTreeModel *model;
+  gchar *word;
+
+  if (gtk_tree_selection_get_selected(treeselection, &model, &iter)) {
+
+    gtk_tree_model_get(model, &iter, 0, &word,  -1);
+   	int rsize;
+	char meaning[100000];
+	GtkTextBuffer *Buffer;
+	Buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(data->txt_meaning));
+	gtk_text_buffer_set_text(Buffer, "", -1);
+
+	if (btsel(data->tree_word, word, meaning, sizeof(meaning), &rsize) == 0)
+		gtk_text_buffer_set_text(Buffer, meaning, -1);
+
+    g_free(word);
+  }
+}
 
 // The “search-changed” signal
 G_MODULE_EXPORT void 
 func_search_word (GtkSearchEntry *entry, ChData *data){
 	gchar *search_word = gtk_entry_get_text(GTK_ENTRY(entry));
-	GtkTextBuffer *clear;
+	GtkTextBuffer *Buffer;
 
 
-	clear = gtk_text_view_get_buffer(GTK_TEXT_VIEW(data->txt_meaning));
-		gtk_text_buffer_set_text(clear, "", -1);
-		
-		int rsize;
-		char meaning[100000];
-		if (btsel(data->tree_word, search_word, meaning, sizeof(meaning), &rsize) == 0)
-				gtk_text_buffer_set_text(clear, meaning, -1);
-		else{
+	Buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(data->txt_meaning));
+	gtk_text_buffer_set_text(Buffer, "", -1);
+	
+	int rsize;
+	char meaning[100000];
+	if (btsel(data->tree_word, search_word, meaning, sizeof(meaning), &rsize) == 0)
+			gtk_text_buffer_set_text(Buffer, meaning, -1);
+	else{
 
-				char *soundex_str = soundex(search_word);
-				char series_word[10000];
-				int size_series_word_rev;
-				if (btsel(data->tree_soundex, soundex_str, series_word, sizeof(series_word), &size_series_word_rev) != 0)
-						return;
-				// clear
-				gtk_list_store_clear(data->list_store);
-				GtkTreeIter  iter;
+			char *soundex_str = soundex(search_word);
+			char series_word[10000];
+			int size_series_word_rev;
+			if (btsel(data->tree_soundex, soundex_str, series_word, sizeof(series_word), &size_series_word_rev) != 0)
+					return;
+			// clear
+			gtk_list_store_clear(data->list_store);
+			GtkTreeIter  iter;
 
-				char str[1000];
-				int count = 0;
-				strcpy(str, series_word);
-				char *wordi = strtok (str, ";");
-				while (wordi != NULL)  {
-					gtk_list_store_append(data->list_store, &iter);
-					gtk_list_store_set (data->list_store, &iter, 0, wordi, -1);
-					wordi = strtok (NULL, ";");
-					count++;
-					if(count > (MAX_SUGGEST))
-						break;
-			 }
-			 free(soundex_str);
-		}
+			char str[1000];
+			int count = 0;
+			strcpy(str, series_word);
+			char *wordi = strtok (str, ";");
+			while (wordi != NULL)  {
+				gtk_list_store_append(data->list_store, &iter);
+				gtk_list_store_set (data->list_store, &iter, 0, wordi, -1);
+				wordi = strtok (NULL, ";");
+				count++;
+				if(count > (MAX_SUGGEST))
+					break;
+		 }
+		 free(soundex_str);
+	}
 }
 
 
