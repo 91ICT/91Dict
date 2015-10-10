@@ -182,3 +182,24 @@ gboolean add_word_to_dict(ChData *data, char *word, char *mean){
 
 	return FALSE;
 }
+
+// Support for edit function in edit dialog
+gboolean edit_mean_word_from_dict(ChData *data, char *word, char *mean){
+	if (word == NULL || mean == NULL || data == NULL){
+		fprintf(stderr, "ERROR: NULL value %s:%d\n", __FILE__, __LINE__);
+		exit(1);
+	}
+	
+	char mean_rev[2000000];
+	int size_mean_rev;
+
+	if(btsel(data->tree_word, word, mean_rev, sizeof(mean_rev), &size_mean_rev) == 0){
+		// have word on tree_word
+		if(btupd(data->tree_word, word, mean, strlen(mean) + 1) != 0)
+			return FALSE;
+		
+		return TRUE;
+	} 
+
+	return FALSE;
+}

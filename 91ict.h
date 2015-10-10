@@ -18,8 +18,10 @@ void gen_soundex_db(BTA *soundex_t, BTA *word_t);
 char *soundex(const char *in);
 
 ///////// Support API for singal processing
-// Support for Add in add dialog
+// Support for Add function in add dialog
 gboolean add_word_to_dict(ChData *data, char *word, char *mean);
 
+// Support for edit function in edit dialog
+gboolean edit_mean_word_from_dict(ChData *data, char *word, char *mean);
 
 #endif
