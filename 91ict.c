@@ -197,9 +197,98 @@ gboolean edit_mean_word_from_dict(ChData *data, char *word, char *mean){
 		// have word on tree_word
 		if(btupd(data->tree_word, word, mean, strlen(mean) + 1) != 0)
 			return FALSE;
-		
+
 		return TRUE;
 	} 
 
+	return FALSE;
+}
+
+// Support for get list of word have same soundex string on value of string
+list_word *parse_soundex_val(char *soundex_val, int *size){
+	if(soundex_val == NULL){
+		fprintf(stderr, "ERROR: NULL value %s:%d\n", __FILE__, __LINE__);
+		exit(1);
+	}
+
+	list_word *list;
+	register int index, count = 1;
+	for (index = 0; index < count; ++index){
+		if(soundex_val[index] == ';')
+			count++;
+	}
+
+	list = (list_word *)malloc(sizeof(list_word) + count);
+	if(list == NULL){
+		fprintf(stderr, "ERROR: Allocated failed in %s:%d\n", __FILE__, __LINE__);
+		exit(1);
+	}
+	index = 0;
+	char *word = strtok (soundex_val, ";");
+	while (word != NULL)	{
+		strcpy(list[index].word, word);
+		word = strtok (NULL, ";");
+		index++;
+	}
+
+	*size = count;
+	return list;
+}
+
+// Support for edit function in edit dialog
+gboolean delete_word_from_dict(ChData *data, char *word, char *mean){
+	if (word == NULL || mean == NULL || data == NULL){
+		fprintf(stderr, "ERROR: NULL value %s:%d\n", __FILE__, __LINE__);
+		exit(1);
+	}
+
+	char mean_rev[2000000];
+	int size_mean_rev;
+
+	if(btsel(data->tree_word, word, mean_rev, sizeof(mean_rev), &size_mean_rev) == 0){
+		// have word on tree_word
+		if(btdel(data->tree_word, word) != 0)
+			return FALSE;
+
+
+		char *soundex_str = soundex(word);
+		char series_word[200000];
+		int size_series_word_rev;
+
+		if(btsel(data->tree_soundex, soundex_str, series_word, sizeof(series_word), &size_series_word_rev) != 0){
+			// haven't soundex_str on soundex_tree 
+			fprintf(stderr, "ERROR: word haven't add soundex string %s:%d\n", __FILE__, __LINE__);
+			return TRUE;
+		} else {
+			// have soundex_str on soundex_tree 
+			int size;
+			list_word *list = parse_soundex_val(series_word, &size);
+			register int index; 
+			if(size == 1) {
+				if(strcmp(soundex_str, word) != 0){
+					fprintf(stderr, "ERROR: word haven't add soundex string %s:%d\n", __FILE__, __LINE__);
+					return TRUE;
+				}
+
+				if(btdel(data->tree_soundex, soundex_str) != 0)
+					return FALSE;
+				goto end;
+			}
+
+			strcpy(series_word, "");
+			if(strcmp(list[0].word, word) != 0)
+				strcat(series_word, list[0].word);
+			for(index = 1; index < size; index++){
+				char separated[100] = ";";
+				if(strcmp(list[index].word, word) == 0)
+					continue;
+				strcat(separated, list[index].word);
+				strcat(series_word, separated);
+			}
+		}
+end:
+		free(soundex_str);
+		return TRUE;
+	} 
 	return FALSE;
 }
