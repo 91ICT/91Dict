@@ -31,6 +31,10 @@ struct _ChData
      GtkListStore *list_store;
      BTA *tree_word; //  key word, value mean
      BTA *tree_soundex; // key string of soundex, string contain list of word has same string of soundex sperat separated by ";"
+     GtkWidget *word_label_edit_dlg;
+     GtkWidget *meaning_txt_edit_dlg;
+     GtkWidget *dlg_edit;
+     GtkTreeSelection *tree_view_selection;
      /* Insert more widgets to use */
 };
 

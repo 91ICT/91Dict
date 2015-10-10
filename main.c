@@ -49,9 +49,11 @@ main(int argc, char** argv)
      GW(dlg_Add);
      GW(dlg_About);
      GW(dlg_Delete);
-
+     GW(dlg_edit);
      GW(word_entry_add_dlg);
      GW(meaning_txt_add_dlg);
+     GW(word_label_edit_dlg);
+     GW(meaning_txt_edit_dlg);
      GW(tree_view);
      GW(search_word);
      GW(txt_meaning);
@@ -60,6 +62,7 @@ main(int argc, char** argv)
      /* Get more objects to use */
 #undef GW
      CH_GET_OBJECT(builder, list_store, GTK_LIST_STORE, data);
+     CH_GET_OBJECT(builder, tree_view_selection, GTK_TREE_SELECTION, data);
      /* Connect signals */
      gtk_builder_connect_signals(builder, data);
 
