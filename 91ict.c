@@ -212,19 +212,20 @@ list_word *parse_soundex_val(char *soundex_val, int *size){
 	}
 
 	list_word *list;
-	register int index, count = 1;
-	for (index = 0; index < count; ++index){
+	int index, count = 1;
+	for (index = 0; soundex_val[index] != '\0'; ++index){
 		if(soundex_val[index] == ';')
 			count++;
 	}
-
 	list = (list_word *)malloc(sizeof(list_word) + count);
 	if(list == NULL){
 		fprintf(stderr, "ERROR: Allocated failed in %s:%d\n", __FILE__, __LINE__);
 		exit(1);
 	}
 	index = 0;
-	char *word = strtok (soundex_val, ";");
+	char str[1000];
+	strcpy(str, soundex_val);
+	char *word = strtok (str, ";");
 	while (word != NULL)	{
 		strcpy(list[index].word, word);
 		word = strtok (NULL, ";");
@@ -285,6 +286,7 @@ gboolean delete_word_from_dict(ChData *data, char *word, char *mean){
 				strcat(separated, list[index].word);
 				strcat(series_word, separated);
 			}
+			free(list);
 		}
 end:
 		free(soundex_str);
