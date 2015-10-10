@@ -16,7 +16,7 @@ on_main_window_destroy(GtkWidget *main_window)
 // The “search-changed” signal
 G_MODULE_EXPORT void 
 func_search_word (GtkSearchEntry *entry, ChData *data){
-	gchar *search_word = gtk_entry_get_text(GTK_ENTRY(data->search_word));
+	gchar *search_word = gtk_entry_get_text(GTK_ENTRY(entry));
 	GtkTextBuffer *clear;
 
 
