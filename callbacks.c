@@ -83,6 +83,18 @@ void reset_TextView(GtkWidget *TextView)
 }
 
 
+void status_dialog(GtkWindow *parent, gchar *message)
+{
+	GtkWidget *dialog;
+	dialog = gtk_message_dialog_new(parent,
+		GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
+		GTK_MESSAGE_INFO, GTK_BUTTONS_CLOSE, message);
+	gtk_window_set_title(GTK_WINDOW(dialog), "Status");
+	gtk_dialog_run(GTK_DIALOG(dialog));
+    gtk_widget_destroy(dialog);
+}
+
+
 /* CANCEL button handler */
  G_MODULE_EXPORT void
  on_btn_Cancel_add_clicked(GtkButton *btn_Cancel_add, ChData *data)
@@ -108,6 +120,15 @@ on_btn_Add_add_clicked(GtkButton *btn_Add_add, ChData *data)
 	gtk_text_buffer_get_bounds (buffer, &start, &end);
 	meaning = gtk_text_buffer_get_text (buffer, &start, &end, FALSE);
 	printf("Text View: %s\n", meaning);
+
+	/* Insert the word into the tree */
+	int result = btins(data->tree, word, meaning, sizeof(meaning));
+	printf("Result: %d\n", result);
+	if(result == 0){
+		status_dialog( (GtkWindow*) data->dlg_Add, "Successfully!");
+	}else{
+		status_dialog( (GtkWindow*) data->dlg_Add, "An error has occured!\nPlease try again");
+	}
 
 	/* reset text field */
 	reset_Entry(data->word_entry_add_dlg);
