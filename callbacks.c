@@ -123,9 +123,10 @@ on_btn_Add_add_clicked(GtkButton *btn_Add_add, ChData *data)
 	//printf("Size of meaning is: %ld\n", g_utf8_strlen(meaning, -1));
 
 	/* Insert the word into the tree */
-	int result = btins(data->tree_word, word, meaning, g_utf8_strlen(meaning, -1));
+	int result = add_word_to_dict(data, word, meaning);
 	printf("Result: %d\n", result);
-	if(result == 0){
+	
+	if(result){
 		status_dialog( (GtkWindow*) data->dlg_Add, "Successfully!");
 	}else{
 		status_dialog( (GtkWindow*) data->dlg_Add, "An error has occured!\nPlease try again");
@@ -136,6 +137,6 @@ on_btn_Add_add_clicked(GtkButton *btn_Add_add, ChData *data)
     reset_TextView(data->meaning_txt_add_dlg);
 
     /* free memory */
-    //g_free(meaning);
+    g_free(meaning);
     //g_free(word);
 }
