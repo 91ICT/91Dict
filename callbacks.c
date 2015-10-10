@@ -71,6 +71,7 @@ on_btn_About_clicked(GtkButton *btn_About, ChData *data)
 G_MODULE_EXPORT void
 on_btn_Add_clicked(GtkButton *btn_Add, ChData *data)
 {
+
 		 gtk_dialog_run(GTK_DIALOG(data->dlg_Add));
 		 gtk_widget_hide(data->dlg_Add);
 }
@@ -83,13 +84,81 @@ on_btn_Delete_clicked(GtkButton *btn_Delete, ChData *data)
 		 gtk_widget_hide(data->dlg_Delete);
 }
 
-/***********************
- *     EDIT DIALOG     *
- ***********************/
+
+/*************************
+*      ADD DIALOG        *
+**************************/
+
+/* Clear the Entry */
+void reset_Entry(GtkWidget *Entry)
+{
+	GtkEntryBuffer *buffer = gtk_entry_buffer_new (NULL, 0);
+	gtk_entry_set_buffer( (GtkEntry*) Entry, buffer);
+}
+
+
+/* Clear the TextView */
+void reset_TextView(GtkWidget *TextView)
+{
+	GtkTextBuffer *buffer = gtk_text_buffer_new(NULL);
+	gtk_text_view_set_buffer( (GtkTextView*) TextView, buffer);
+}
+
+
+void status_dialog(GtkWindow *parent, gchar *message)
+{
+	GtkWidget *dialog;
+	dialog = gtk_message_dialog_new(parent,
+		GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
+		GTK_MESSAGE_INFO, GTK_BUTTONS_CLOSE, message);
+	gtk_window_set_title(GTK_WINDOW(dialog), "Status");
+	gtk_dialog_run(GTK_DIALOG(dialog));
+    gtk_widget_destroy(dialog);
+}
+
 
 /* CANCEL button handler */
  G_MODULE_EXPORT void
  on_btn_Cancel_add_clicked(GtkButton *btn_Cancel_add, ChData *data)
  {
-			gtk_widget_hide(data->dlg_Add);
+
+      gtk_widget_hide(data->dlg_Add);     
+      reset_Entry(data->word_entry_add_dlg);
+      reset_TextView(data->meaning_txt_add_dlg);
  }
+
+
+/* ADD button handler */
+G_MODULE_EXPORT void
+on_btn_Add_add_clicked(GtkButton *btn_Add_add, ChData *data)
+{
+	printf("Add button clicked\n");
+	const gchar *word = gtk_entry_get_text(GTK_ENTRY(data->word_entry_add_dlg));
+	printf("Word Entry: %s\n", word);
+
+	/* Get text from GtkTextView */
+	GtkTextIter start, end;
+	GtkTextBuffer *buffer = gtk_text_view_get_buffer ( (GtkTextView*) (data->meaning_txt_add_dlg) );
+	gchar *meaning;
+	gtk_text_buffer_get_bounds (buffer, &start, &end);
+	meaning = gtk_text_buffer_get_text (buffer, &start, &end, FALSE);
+	printf("Text View: %s\n", meaning);
+	//printf("Size of meaning is: %ld\n", g_utf8_strlen(meaning, -1));
+
+	/* Insert the word into the tree */
+	int result = btins(data->tree_word, word, meaning, g_utf8_strlen(meaning, -1));
+	printf("Result: %d\n", result);
+	if(result == 0){
+		status_dialog( (GtkWindow*) data->dlg_Add, "Successfully!");
+	}else{
+		status_dialog( (GtkWindow*) data->dlg_Add, "An error has occured!\nPlease try again");
+	}
+
+	/* reset text field */
+	reset_Entry(data->word_entry_add_dlg);
+    reset_TextView(data->meaning_txt_add_dlg);
+
+    /* free memory */
+    //g_free(meaning);
+    //g_free(word);
+}
