@@ -6,6 +6,7 @@ LIB         = ./lib
 SRCS        = 91ict.c  main.c callbacks.c
 OBJS        = $(SRCS:.c=.o)
 EXECUTABLE  = 91Dict
+DB          = dict_db soundex_db
 
 all: $(SRCS) $(EXECUTABLE)
 
@@ -22,7 +23,7 @@ $(EXECUTABLE): $(OBJS)
 	$(CC) -I$(INC) $(CFLAGS) -c $< -o $@ -L$(LIB) $(LIBS)
 
 clean:
-	rm -rf *.o $(EXECUTABLE) dict_db
+	rm -rf *.o $(EXECUTABLE) $(DB)
 
 remake: clean all
 reprofiling: clean profiling
