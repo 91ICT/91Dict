@@ -24,11 +24,8 @@ gboolean add_word_to_dict(ChData *data, char *word, char *mean);
 // Support for edit function in edit dialog
 gboolean edit_mean_word_from_dict(ChData *data, char *word, char *mean);
 
-// Support for edit function in edit dialog
-gboolean delete_word_from_dict(ChData *data, char *word, char *mean);
-
-// Support for get list of word have same soundex string on value of string
-list_word *parse_soundex_val(char *soundex_val, int *size);
+// Support for delete function in edit dialog
+gboolean delete_word_from_dict(ChData *data, char *word);
 
 /* Clear the Entry */
 void reset_Entry(GtkWidget *Entry);

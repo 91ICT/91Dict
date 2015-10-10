@@ -39,6 +39,11 @@
       </object>
     </child>
   </object>
+  <object class="GtkImage" id="image1">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-edit</property>
+  </object>
   <object class="GtkImage" id="img_About_btn">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
@@ -46,12 +51,6 @@
     <property name="icon_size">3</property>
   </object>
   <object class="GtkImage" id="img_Add_2_btn">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-add</property>
-    <property name="icon_size">3</property>
-  </object>
-  <object class="GtkImage" id="img_Add_2_btn1">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
     <property name="stock">gtk-add</property>
@@ -74,12 +73,13 @@
     <property name="height_request">250</property>
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Add</property>
-    <property name="window_position">center-always</property>
+    <property name="window_position">center</property>
     <property name="default_width">400</property>
     <property name="default_height">250</property>
     <property name="destroy_with_parent">True</property>
     <property name="icon_name">address-book-new</property>
     <property name="type_hint">normal</property>
+    <property name="gravity">center</property>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox1">
         <property name="can_focus">False</property>
@@ -185,7 +185,7 @@
             </child>
           </object>
           <packing>
-            <property name="expand">False</property>
+            <property name="expand">True</property>
             <property name="fill">True</property>
             <property name="position">1</property>
           </packing>
@@ -201,7 +201,13 @@
   </object>
   <object class="GtkDialog" id="dlg_edit">
     <property name="can_focus">False</property>
+    <property name="title" translatable="yes">Edit</property>
+    <property name="window_position">center</property>
+    <property name="default_width">400</property>
+    <property name="default_height">250</property>
+    <property name="destroy_with_parent">True</property>
     <property name="type_hint">dialog</property>
+    <property name="gravity">center</property>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox2">
         <property name="can_focus">False</property>
@@ -212,13 +218,15 @@
             <property name="can_focus">False</property>
             <property name="layout_style">end</property>
             <child>
-              <object class="GtkButton" id="btn_Add_editdlg">
-                <property name="label" translatable="yes">  Add</property>
+              <object class="GtkButton" id="btn_edit_editdlg">
+                <property name="label" translatable="yes">Edit</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="image">img_Add_2_btn1</property>
+                <property name="image">image1</property>
+                <property name="yalign">0.50999999046325684</property>
                 <property name="always_show_image">True</property>
+                <signal name="clicked" handler="on_btn_edit_clicked_edit_dlg" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -227,7 +235,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="btn_Cancel_editdlg">
+              <object class="GtkButton" id="btn_cancel_editdlg">
                 <property name="label" translatable="yes">  Cancel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -304,7 +312,7 @@
             </child>
           </object>
           <packing>
-            <property name="expand">False</property>
+            <property name="expand">True</property>
             <property name="fill">True</property>
             <property name="position">1</property>
           </packing>
@@ -351,6 +359,7 @@
                 <property name="receives_default">True</property>
                 <property name="image">img_Cancel_delete</property>
                 <property name="always_show_image">True</property>
+                <signal name="clicked" handler="on_btn_Cancel_clicked_del_dlg" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -366,6 +375,7 @@
                 <property name="receives_default">True</property>
                 <property name="image">img_Delete_delete</property>
                 <property name="always_show_image">True</property>
+                <signal name="clicked" handler="on_btn_del_clicked_del_dlg" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -478,6 +488,7 @@
                 <property name="image">img_Edit_btn</property>
                 <property name="xalign">0.50999999046325684</property>
                 <property name="always_show_image">True</property>
+                <signal name="clicked" handler="on_btn_edit_clicked" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>

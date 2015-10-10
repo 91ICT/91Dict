@@ -204,41 +204,10 @@ gboolean edit_mean_word_from_dict(ChData *data, char *word, char *mean){
 	return FALSE;
 }
 
-// Support for get list of word have same soundex string on value of string
-list_word *parse_soundex_val(char *soundex_val, int *size){
-	if(soundex_val == NULL){
-		fprintf(stderr, "ERROR: NULL value %s:%d\n", __FILE__, __LINE__);
-		exit(1);
-	}
 
-	list_word *list;
-	int index, count = 1;
-	for (index = 0; soundex_val[index] != '\0'; ++index){
-		if(soundex_val[index] == ';')
-			count++;
-	}
-	list = (list_word *)malloc(sizeof(list_word) + count);
-	if(list == NULL){
-		fprintf(stderr, "ERROR: Allocated failed in %s:%d\n", __FILE__, __LINE__);
-		exit(1);
-	}
-	index = 0;
-	char str[1000];
-	strcpy(str, soundex_val);
-	char *word = strtok (str, ";");
-	while (word != NULL)	{
-		strcpy(list[index].word, word);
-		word = strtok (NULL, ";");
-		index++;
-	}
-
-	*size = count;
-	return list;
-}
-
-// Support for edit function in edit dialog
-gboolean delete_word_from_dict(ChData *data, char *word, char *mean){
-	if (word == NULL || mean == NULL || data == NULL){
+// Support for delete function in edit dialog
+gboolean delete_word_from_dict(ChData *data, char *word){
+	if (word == NULL || data == NULL){
 		fprintf(stderr, "ERROR: NULL value %s:%d\n", __FILE__, __LINE__);
 		exit(1);
 	}
@@ -262,31 +231,41 @@ gboolean delete_word_from_dict(ChData *data, char *word, char *mean){
 			return TRUE;
 		} else {
 			// have soundex_str on soundex_tree 
-			int size;
-			list_word *list = parse_soundex_val(series_word, &size);
-			register int index; 
-			if(size == 1) {
-				if(strcmp(soundex_str, word) != 0){
-					fprintf(stderr, "ERROR: word haven't add soundex string %s:%d\n", __FILE__, __LINE__);
-					return TRUE;
+
+			char str[1000];
+			int count = 0;
+
+			strcpy(str, series_word);
+			strcpy(series_word, "");
+			char *wordi = strtok (str, ";");
+			while (wordi != NULL)  {
+;
+				if(count == 0)
+					if(strcmp(wordi, word) != 0)
+						strcat(series_word, wordi);
+				char separated[100] = ";";
+				if(strcmp(wordi, word) == 0){
+					wordi = strtok (NULL, ";");
+					continue;
+				}
+				strcat(separated, wordi);
+				strcat(series_word, separated);
+				wordi = strtok (NULL, ";");
+				count++;
+				if (count == 50)
+				{
+					break;
+				}
+			}
+
+			if(count == 1)
+				if(btdel(data->tree_soundex, soundex_str) != 0){
+					return FALSE;
+					goto end;
 				}
 
-				if(btdel(data->tree_soundex, soundex_str) != 0)
-					return FALSE;
-				goto end;
-			}
-
-			strcpy(series_word, "");
-			if(strcmp(list[0].word, word) != 0)
-				strcat(series_word, list[0].word);
-			for(index = 1; index < size; index++){
-				char separated[100] = ";";
-				if(strcmp(list[index].word, word) == 0)
-					continue;
-				strcat(separated, list[index].word);
-				strcat(series_word, separated);
-			}
-			free(list);
+			if(btupd(data->tree_soundex, soundex_str, series_word, strlen(series_word) + 1) != 0)
+				return FALSE;
 		}
 end:
 		free(soundex_str);

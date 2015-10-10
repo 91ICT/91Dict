@@ -38,11 +38,6 @@ struct _ChData
      /* Insert more widgets to use */
 };
 
-/* struct for list of word has same soundex string*/
-typedef struct _list_word {
-     char word[100];
-} list_word;
-
 #endif /* __SUPPORT_H__ */
 
 
