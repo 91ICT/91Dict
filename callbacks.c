@@ -103,7 +103,7 @@ on_btn_Add_clicked(GtkButton *btn_Add, ChData *data)
 		gtk_widget_hide(data->dlg_Add);
 }
 
-/* ADD button (on main window) handler */
+/* Edit button (on main window) handler */
 G_MODULE_EXPORT void
 on_btn_edit_clicked(GtkButton *btn_Add, ChData *data)
 {
@@ -134,8 +134,27 @@ on_btn_edit_clicked(GtkButton *btn_Add, ChData *data)
 G_MODULE_EXPORT void
 on_btn_Delete_clicked(GtkButton *btn_Delete, ChData *data)
 {
-	gtk_dialog_run(GTK_DIALOG(data->dlg_Delete));
-	gtk_widget_hide(data->dlg_Delete);
+	GtkTreeIter iter;
+	GtkTreeModel *model;
+	gchar *word;
+
+	if (gtk_tree_selection_get_selected(data->tree_view_selection, &model, &iter)) {
+
+		gtk_tree_model_get(model, &iter, 0, &word,  -1);
+		gtk_dialog_run(GTK_DIALOG(data->dlg_Delete));
+		gtk_widget_hide(data->dlg_Delete);
+		g_free(word);
+	} else {
+		gchar *search_word = gtk_entry_get_text(GTK_ENTRY(data->search_word));
+		if(strcmp(search_word, "") == 0)
+			status_dialog( (GtkWindow*) data->main_window, "Please select word on list !");
+		else{
+			gtk_label_set_text(GTK_LABEL(data->word_label_edit_dlg), search_word);
+			gtk_dialog_run(GTK_DIALOG(data->dlg_Delete));
+			gtk_widget_hide(data->dlg_Delete);
+		}
+	}
+
 }
 
 
@@ -147,7 +166,6 @@ on_btn_Delete_clicked(GtkButton *btn_Delete, ChData *data)
  G_MODULE_EXPORT void
  on_btn_Cancel_add_clicked(GtkButton *btn_Cancel_add, ChData *data)
  {
-
 	gtk_widget_hide(data->dlg_Add);     
 	reset_Entry(data->word_entry_add_dlg);
 	reset_TextView(data->meaning_txt_add_dlg);
