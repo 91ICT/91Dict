@@ -218,6 +218,23 @@
             <property name="can_focus">False</property>
             <property name="layout_style">end</property>
             <child>
+              <object class="GtkButton" id="btn_cancel_editdlg">
+                <property name="label" translatable="yes">  Cancel</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="image">img_Cancel_btn1</property>
+                <property name="xalign">0.47999998927116394</property>
+                <property name="always_show_image">True</property>
+                <signal name="clicked" handler="on_btn_Cancel_clicked_edit_dlg" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
               <object class="GtkButton" id="btn_edit_editdlg">
                 <property name="label" translatable="yes">Edit</property>
                 <property name="visible">True</property>
@@ -227,22 +244,6 @@
                 <property name="yalign">0.50999999046325684</property>
                 <property name="always_show_image">True</property>
                 <signal name="clicked" handler="on_btn_edit_clicked_edit_dlg" swapped="no"/>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="btn_cancel_editdlg">
-                <property name="label" translatable="yes">  Cancel</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="image">img_Cancel_btn1</property>
-                <property name="xalign">0.47999998927116394</property>
-                <property name="always_show_image">True</property>
               </object>
               <packing>
                 <property name="expand">False</property>

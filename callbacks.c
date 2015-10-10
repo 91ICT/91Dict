@@ -227,10 +227,11 @@ on_btn_edit_clicked_edit_dlg(GtkButton *btn_, ChData *data)
 	gtk_widget_hide(data->dlg_edit);
 
 	reset_Entry(data->search_word);
-	reset_TextView(data->txt_meaning);
+	
 	gtk_list_store_clear(data->list_store);
 	/* free memory */
 	g_free(meaning);
+	reset_TextView(data->txt_meaning);
 
 }
 
