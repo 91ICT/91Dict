@@ -15,10 +15,17 @@ main(int argc, char** argv)
      btinit();
 
      if(check_file_exist("dict_db"))
-          tree = btopn("dict_db", 0, FALSE);
+          tree_word = btopn("dict_db", 0, FALSE);
      else{
-          tree = btcrt("dict_db", 0, FALSE);
-          foldoc_load_2_tree(tree, "FOLDOC");
+          tree_word = btcrt("dict_db", 0, FALSE);
+          foldoc_load_2_tree(tree_word, "FOLDOC");
+     }
+
+     if(check_file_exist("soundex_db"))
+          tree_soundex = btopn("soundex_db", 0, FALSE);
+     else{
+          tree_soundex = btcrt("soundex_db", 0, FALSE);
+          gen_soundex_db(tree_soundex, tree_word);
      }
 
      /* Init GTK+ */
@@ -49,7 +56,7 @@ main(int argc, char** argv)
      GW(search_word);
      GW(txt_meaning);
      data->tree_word = tree_word;
-     ata->tree_soundex = tree_soundex;
+     data->tree_soundex = tree_soundex;
      /* Get more objects to use */
 #undef GW
      CH_GET_OBJECT(builder, list_store, GTK_LIST_STORE, data);
@@ -67,6 +74,9 @@ main(int argc, char** argv)
 
      /* Free any allocated data */
      g_slice_free(ChData, data);
+     btcls(tree_soundex);
+     btcls(tree_word);
+
 
      return(0);
 }
