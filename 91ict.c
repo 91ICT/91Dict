@@ -4,6 +4,7 @@
 #include <string.h>
 #include <ctype.h> 
 
+////////// For DB
 // check exist file
 int check_file_exist(const char *file_name){
 	 struct stat buffer;
@@ -140,4 +141,41 @@ char *soundex(const char *in) {
    }
 
    return key;
+}
+
+///////// Support API for singal processing
+// Support for Add in add dialog
+gboolean add_word_to_dict(ChData *data, char *word, char *mean){
+	if (word == NULL || mean == NULL || data == NULL){
+		fprintf(stderr, "ERROR: NULL value %s:%d\n", __FILE__, __LINE__);
+		exit(1);
+	}
+	
+	char mean_rev[2000000];
+	int size_mean_rev;
+
+	if(btsel(data->tree_word, word, mean_rev, sizeof(mean_rev), &size_mean_rev) != 0){
+		// Don't word on tree_word
+		btins(data->tree_word, word, mean, strlen(mean) + 1);
+
+		char *soundex_str = soundex(word);
+		char series_word[200000];
+		int size_series_word_rev;
+
+		if(btsel(data->tree_soundex, soundex_str, series_word, sizeof(series_word), &size_series_word_rev) != 0){
+			// Don't soundex_str on soundex_tree 
+			btins(data->tree_soundex, soundex_str, word, strlen(word) + 1);
+		} else {
+			// have soundex_str on soundex_tree 
+			char separated[100] = ";";
+			strcat(separated, word);
+			strcat(series_word, separated);
+			btupd(data->tree_soundex, soundex_str, series_word, strlen(series_word) + 1);
+		}
+		free(soundex_str);
+
+		return TRUE;
+	} 
+
+	return FALSE;
 }
