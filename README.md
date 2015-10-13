@@ -2,7 +2,7 @@
 
 
 ## Use
-![](http://i.imgur.com/jd16av1.gifv)
+![](http://i.imgur.com/jd16av1.gif)
 
 
 ## LICENSE
