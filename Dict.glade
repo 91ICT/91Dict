@@ -417,6 +417,7 @@
     <property name="icon_name">accessories-dictionary</property>
     <property name="gravity">center</property>
     <signal name="destroy" handler="on_main_window_destroy" swapped="no"/>
+    <signal name="key-press-event" handler="on_key_press_short_cut" swapped="no"/>
     <child>
       <object class="GtkGrid" id="grid1">
         <property name="visible">True</property>

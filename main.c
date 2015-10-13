@@ -57,6 +57,9 @@ main(int argc, char** argv)
      GW(tree_view);
      GW(search_word);
      GW(txt_meaning);
+     GW(btn_Add);
+     GW(btn_Edit);
+     GW(btn_Delete);
      data->tree_word = tree_word;
      data->tree_soundex = tree_soundex;
      /* Get more objects to use */

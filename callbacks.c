@@ -2,6 +2,8 @@
 #include "91ict.h"
 #include <stdlib.h>
 #include <string.h>
+#include <gdk/gdkkeysyms.h>
+
 #define MAX_SUGGEST 30
 
 /* Stop application when closed */
@@ -14,6 +16,46 @@ on_main_window_destroy(GtkWidget *main_window)
 /***********************
  *     MAIN WINDOW     *
  ***********************/
+// for short cut
+G_MODULE_EXPORT gboolean
+on_key_press_short_cut(GtkWidget *window, GdkEventKey *event, ChData *data) {
+	switch (event->keyval)
+	{
+	case GDK_KEY_n:
+		// if (event->state & GDK_SHIFT_MASK) { // shift + N (GDK_KEY_N)
+
+		// }
+		if (event->state & GDK_CONTROL_MASK) {
+			// ctrl + n
+			g_signal_emit_by_name ((gpointer) data->btn_Add, "clicked");
+			return TRUE;
+		}
+		// else
+		// {
+		// n
+		// }
+		break;
+	case GDK_KEY_e:
+		if (event->state & GDK_CONTROL_MASK) {
+			// ctrl + e
+			g_signal_emit_by_name ((gpointer) data->btn_Edit, "clicked");
+			return TRUE;
+		}
+		break;
+	case GDK_KEY_Delete:
+		if (event->state & GDK_SHIFT_MASK) {
+			// shift + Del
+			g_signal_emit_by_name ((gpointer) data->btn_Delete, "clicked");
+			return TRUE;
+		}
+		break;
+
+	default:
+		return FALSE;
+	}
+
+	return FALSE;
+}
 
  // for tree_view_selection
 G_MODULE_EXPORT void 
@@ -45,11 +87,12 @@ func_search_word (GtkSearchEntry *entry, ChData *data){
 	gchar *search_word = gtk_entry_get_text(GTK_ENTRY(entry));
 	GtkTextBuffer *Buffer;
 
-
+	g_print("%s\n", search_word);
 
 	Buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(data->txt_meaning));
 	gtk_text_buffer_set_text(Buffer, "", -1);
 	
+
 	int rsize;
 	char meaning[100000];
 	if (btsel(data->tree_word, search_word, meaning, sizeof(meaning), &rsize) == 0){
@@ -58,6 +101,7 @@ func_search_word (GtkSearchEntry *entry, ChData *data){
 		gtk_list_store_append(data->list_store, &iter);
 		gtk_list_store_set (data->list_store, &iter, 0, search_word, -1);
 		gtk_text_buffer_set_text(Buffer, meaning, -1);
+		data->word_meaningful_search_entry = TRUE;
 	} else {
 		char *soundex_str = soundex(search_word);
 		char series_word[10000];
@@ -80,7 +124,9 @@ func_search_word (GtkSearchEntry *entry, ChData *data){
 			if(count > (MAX_SUGGEST))
 				break;
 		 }
+		 data->word_meaningful_search_entry = FALSE;
 		 free(soundex_str);
+		 reset_TextView(data->txt_meaning);
 	}
 }
 
@@ -120,7 +166,7 @@ on_btn_edit_clicked(GtkButton *btn_Add, ChData *data)
 		g_free(word);
 	} else {
 		gchar *search_word = gtk_entry_get_text(GTK_ENTRY(data->search_word));
-		if(strcmp(search_word, "") == 0)
+		if((strcmp(search_word, "") == 0) || !(data->word_meaningful_search_entry))
 			status_dialog( (GtkWindow*) data->main_window, "Please select word on list !");
 		else{
 			gtk_label_set_text(GTK_LABEL(data->word_label_edit_dlg), search_word);
@@ -146,7 +192,7 @@ on_btn_Delete_clicked(GtkButton *btn_Delete, ChData *data)
 		g_free(word);
 	} else {
 		gchar *search_word = gtk_entry_get_text(GTK_ENTRY(data->search_word));
-		if(strcmp(search_word, "") == 0)
+		if((strcmp(search_word, "") == 0) || !(data->word_meaningful_search_entry))
 			status_dialog( (GtkWindow*) data->main_window, "Please select word on list !");
 		else{
 			gtk_label_set_text(GTK_LABEL(data->word_label_edit_dlg), search_word);
@@ -267,7 +313,7 @@ on_btn_del_clicked_del_dlg(GtkButton *btn_, ChData *data)
 			status_dialog( (GtkWindow*) data->main_window, "Please select word on list !");
 	}
 	
-	/* Edit the word into the tree */
+	/* Delete the word into the tree */
 	if(delete_word_from_dict(data, word)){
 		status_dialog( (GtkWindow*) data->dlg_Add, "Successfully!");
 	}else{

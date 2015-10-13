@@ -35,6 +35,11 @@ struct _ChData
      GtkWidget *meaning_txt_edit_dlg;
      GtkWidget *dlg_edit;
      GtkTreeSelection *tree_view_selection;
+     GtkWidget *btn_Add;
+     GtkWidget *btn_Edit;
+     GtkWidget *btn_Delete;
+     gboolean word_meaningful_search_entry; // if word_meaningful = TRUE --> current word in search entry is has mean otherwise is false
+
      /* Insert more widgets to use */
 };
 
