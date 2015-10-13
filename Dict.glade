@@ -10,12 +10,18 @@
     <property name="window_position">center-always</property>
     <property name="destroy_with_parent">True</property>
     <property name="icon_name">dialog-information</property>
-    <property name="type_hint">menu</property>
+    <property name="type_hint">dialog</property>
     <property name="program_name">91Dict</property>
-    <property name="version">1.0.0</property>
+    <property name="version">1.1.0</property>
     <property name="comments" translatable="yes">91Dict Project for Data Structure and Algorithm Advanced course by 91 ICT team, Hanoi University of Science and Technology</property>
+    <property name="authors">Nguyen Hoang Anh
+Nguyen Tuan Minh
+Nguyen Van Luong
+Hoang Van Sam
+Dao Duy Son
+</property>
     <property name="logo_icon_name">accessories-dictionary</property>
-    <property name="license_type">gpl-3-0</property>
+    <property name="license_type">lgpl-3-0</property>
     <child internal-child="vbox">
       <object class="GtkBox" id="aboutdialog-vbox1">
         <property name="can_focus">False</property>
