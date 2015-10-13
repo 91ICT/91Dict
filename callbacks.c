@@ -226,12 +226,14 @@ on_btn_edit_clicked_edit_dlg(GtkButton *btn_, ChData *data)
 	reset_TextView(data->meaning_txt_edit_dlg);
 	gtk_widget_hide(data->dlg_edit);
 
-	reset_Entry(data->search_word);
-	
-	gtk_list_store_clear(data->list_store);
+	GtkTextBuffer *Buffer;
+	Buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(data->txt_meaning));
+	gtk_text_buffer_set_text(Buffer, meaning, -1);
+
+
 	/* free memory */
 	g_free(meaning);
-	reset_TextView(data->txt_meaning);
+
 
 }
 
