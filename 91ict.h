@@ -1,7 +1,6 @@
 #ifndef __91_ICT__
 #define __91_ICT__
-#include <sys/stat.h>
-#include <gtk/gtk.h>
+
 #include "support.h"
 
 ////////// For DB

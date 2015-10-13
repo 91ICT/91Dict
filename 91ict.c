@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h> 
+#include <sys/stat.h>
 
 ////////// For DB
 // check exist file
