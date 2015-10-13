@@ -285,8 +285,10 @@ void reset_Entry(GtkWidget *Entry)
 /* Clear the TextView */
 void reset_TextView(GtkWidget *TextView)
 {
-	GtkTextBuffer *buffer = gtk_text_buffer_new(NULL);
-	gtk_text_view_set_buffer( (GtkTextView*) TextView, buffer);
+	GtkTextIter start, end;
+	GtkTextBuffer *buffer = gtk_text_view_get_buffer ((GTK_TEXT_VIEW(TextView)));
+	gtk_text_buffer_get_bounds (buffer, &start, &end);
+	gtk_text_buffer_delete(buffer, &start, &end);
 }
 
 void status_dialog(GtkWindow *parent, gchar *message)
