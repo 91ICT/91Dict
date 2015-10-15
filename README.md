@@ -9,8 +9,8 @@
 `ctrl + n`	     : Add new word  
 `ctrl + e` 		 : Edit current search word or selected word  
 `shift + delete` :  Delete current search word or selected word  
-`ctrl + d` : bookmark word  
-`shift + d` : delete bookmark selected word on bookmark  
+`ctrl + d` 		: bookmark word  
+`ctrl + delete` : delete bookmark selected word on bookmark  
 ## Change log
 ---
 ###1.2.0

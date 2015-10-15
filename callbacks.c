@@ -47,6 +47,11 @@ on_key_press_short_cut(GtkWidget *window, GdkEventKey *event, ChData *data) {
 			g_signal_emit_by_name ((gpointer) data->btn_Delete, "clicked");
 			return TRUE;
 		}
+		if (event->state & GDK_CONTROL_MASK) {
+			// ctrl + Del
+			g_signal_emit_by_name ((gpointer) data->btn_del_bookmark, "clicked");
+			return TRUE;
+		}
 		break;
 	case GDK_KEY_d:
 		if (event->state & GDK_CONTROL_MASK) {
@@ -55,13 +60,7 @@ on_key_press_short_cut(GtkWidget *window, GdkEventKey *event, ChData *data) {
 			return TRUE;
 		}
 		break;
-	case GDK_KEY_D:
-		if (event->state & GDK_SHIFT_MASK) {
-			// shift + d
-			g_signal_emit_by_name ((gpointer) data->btn_del_bookmark, "clicked");
-			return TRUE;
-		}
-		break;
+	
 	default:
 		return FALSE;
 	}
