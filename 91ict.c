@@ -302,7 +302,6 @@ gboolean delete_word_from_dict(ChData *data, char *word) {
 					return FALSE;
 					goto end;
 				}
-			g_print("%s !!\n", series_word);
 			if (btupd(data->tree_soundex, soundex_str, series_word, strlen(series_word) + 1) != 0)
 				return FALSE;
 		}
