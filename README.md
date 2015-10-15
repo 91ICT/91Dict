@@ -13,6 +13,8 @@
 `ctrl + delete` : delete bookmark selected word on bookmark  
 ## Change log
 ---
+###1.3.0
+Add multi dictinary
 ###1.2.0
 Add bookmark feature & Auto completion feature
 ###1.1.0   
