@@ -82,18 +82,20 @@ void ENG_VIE_load_2_tree(BTA *tree, const char *eng_vie_file) {
 	char word[100],
 	     mean[100000];
 	char temp[100];
-
+	fseek(f, 3, SEEK_SET);
 	while (!feof(f))
 	{
 		fgets(temp, 100, f);
 		if (temp[0] == '@')
 		{	// if word
-			temp[0] = ' ';
+
 			if (n == 0) // if first time
 			{
 				n++;
-				strcpy(word, temp + 1);
-				word[strlen(temp) - 2] = '\0';
+				strcat(mean, "\t");
+				sscanf(temp, "@%[^/\n]%[^\n]", word, mean);
+				strcat(mean, "\n");
+				word[strlen(word)] = '\0';
 			}
 			else
 			{
@@ -101,15 +103,18 @@ void ENG_VIE_load_2_tree(BTA *tree, const char *eng_vie_file) {
 				btins(tree, word, mean, strlen(mean) + 1);
 				strcpy(mean, "\n"); // free
 				n++;
-				strcpy(word, temp + 1);
-				word[strlen(temp) - 2] = '\0';
+				sscanf(temp, "@%[^/\n]%[^\n]", word, mean);
+				strcat(mean, "\n\t");
+				if(word[strlen(word)-1] == ' ')
+					word[strlen(word)-1] = '\0';
+				else
+					word[strlen(word)] = '\0';
 			}
 		} // mean
 		else {
-			temp[0] = '\t';
 			strcat(mean, temp);
+			strcat(mean, "\t\t");
 		}
-
 	}
 	mean[strlen(mean) - 1] = '\0';
 	btins(tree, word, mean, strlen(mean) + 1);
