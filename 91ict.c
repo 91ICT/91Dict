@@ -111,9 +111,12 @@ void ENG_VIE_load_2_tree(BTA *tree, const char *eng_vie_file) {
 					word[strlen(word)] = '\0';
 			}
 		} // mean
-		else {
+		else {			
+			if(temp[0] != '*')
+				strcat(mean, "\t\t");
+			else
+				strcat(mean, "\t");
 			strcat(mean, temp);
-			strcat(mean, "\t\t");
 		}
 	}
 	mean[strlen(mean) - 1] = '\0';
@@ -171,7 +174,7 @@ gboolean change_dict(gchar *name_dict, ChData *data) {
 	gtk_list_store_clear(data->bookmark_list_store);
 	gtk_list_store_clear(data->list_word_list_store);
 	gtk_list_store_clear(data->entry_completion_list_store);
-
+	reset_Entry(data->search_word);
 
 #define OPEN_DICT(name) 	{ \
 	if (check_file_exist("./data/"#name"-dict.data"))\
@@ -493,8 +496,7 @@ void suggests_init(ChData *data) {
 /* Clear the Entry */
 void reset_Entry(GtkWidget *Entry)
 {
-	GtkEntryBuffer *buffer = gtk_entry_buffer_new (NULL, 0);
-	gtk_entry_set_buffer( (GtkEntry*) Entry, buffer);
+	gtk_entry_set_text(GTK_ENTRY(Entry), "");
 }
 
 /* Clear the TextView */
