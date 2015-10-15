@@ -4,7 +4,7 @@
 #include <string.h>
 #include <gdk/gdkkeysyms.h>
 
-#define MAX_SUGGEST 40
+#define MAX_LIST_WORD 40
 
 /* Stop application when closed */
 G_MODULE_EXPORT void
@@ -147,7 +147,7 @@ func_search_word (GtkSearchEntry *entry, ChData *data) {
 			gtk_list_store_set (data->list_word_list_store, &iter, 0, wordi, -1);
 			wordi = strtok (NULL, ";");
 			count++;
-			if (count > (MAX_SUGGEST))
+			if (count > (MAX_LIST_WORD))
 				break;
 		}
 		data->word_meaningful_search_entry = FALSE;
