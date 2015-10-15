@@ -275,10 +275,13 @@ gboolean delete_word_from_dict(ChData *data, char *word) {
 			strcpy(series_word, "");
 			char *wordi = strtok (str, ";");
 			while (wordi != NULL)  {
-				;
 				if (count == 0)
-					if (strcmp(wordi, word) != 0)
+					if (strcmp(wordi, word) != 0){
 						strcat(series_word, wordi);
+						wordi = strtok (NULL, ";");
+						count++;
+						continue;
+					}
 				char separated[100] = ";";
 				if (strcmp(wordi, word) == 0) {
 					wordi = strtok (NULL, ";");
@@ -299,7 +302,7 @@ gboolean delete_word_from_dict(ChData *data, char *word) {
 					return FALSE;
 					goto end;
 				}
-
+			g_print("%s !!\n", series_word);
 			if (btupd(data->tree_soundex, soundex_str, series_word, strlen(series_word) + 1) != 0)
 				return FALSE;
 		}
