@@ -104,7 +104,7 @@ void ENG_VIE_load_2_tree(BTA *tree, const char *eng_vie_file) {
 				strcpy(mean, "\n"); // free
 				n++;
 				sscanf(temp, "@%[^/\n]%[^\n]", word, mean);
-				strcat(mean, "\n\t");
+				strcat(mean, "\n");
 				if(word[strlen(word)-1] == ' ')
 					word[strlen(word)-1] = '\0';
 				else
