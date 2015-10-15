@@ -9,9 +9,12 @@
 `ctrl + n`	     : Add new word  
 `ctrl + e` 		 : Edit current search word or selected word  
 `shift + delete` :  Delete current search word or selected word  
-
+`ctrl + d` : bookmark word  
+`shift + d` : delete bookmark selected word on bookmark  
 ## Change log
 ---
+###1.2.0
+Add bookmark feature & Auto completion feature
 ###1.1.0   
 Add shortcut feature  
 ###1.0.0   
