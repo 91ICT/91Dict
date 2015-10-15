@@ -122,7 +122,11 @@ func_search_word (GtkSearchEntry *entry, ChData *data) {
 
 	Buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(data->txt_meaning));
 	gtk_text_buffer_set_text(Buffer, "", -1);
-
+	if(strlen(search_word) == 0){
+		gtk_list_store_clear(data->list_word_list_store);
+		reset_TextView(data->txt_meaning);
+		return;
+	}
 
 	int rsize;
 	char meaning[100000];
