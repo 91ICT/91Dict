@@ -4,7 +4,7 @@
 #include <string.h>
 #include <gdk/gdkkeysyms.h>
 
-#define MAX_SUGGEST 30
+#define MAX_SUGGEST 40
 
 /* Stop application when closed */
 G_MODULE_EXPORT void

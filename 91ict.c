@@ -291,10 +291,6 @@ gboolean delete_word_from_dict(ChData *data, char *word) {
 				strcat(series_word, separated);
 				wordi = strtok (NULL, ";");
 				count++;
-				if (count == 50)
-				{
-					break;
-				}
 			}
 
 			if (count == 1)

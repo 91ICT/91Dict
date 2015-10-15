@@ -559,7 +559,7 @@
                 <property name="margin_left">1</property>
                 <property name="margin_right">1</property>
                 <property name="is_important">True</property>
-                <property name="label" translatable="yes">Add Bookmark</property>
+                <property name="label" translatable="yes">Bookmark</property>
                 <property name="use_underline">True</property>
                 <property name="icon_name">bookmark-add</property>
                 <signal name="clicked" handler="on_btn_bookmark_clicked" swapped="no"/>
@@ -576,7 +576,7 @@
                 <property name="margin_left">1</property>
                 <property name="margin_right">1</property>
                 <property name="is_important">True</property>
-                <property name="label" translatable="yes">Delete Bookmark</property>
+                <property name="label" translatable="yes">Remove Bookmark</property>
                 <property name="use_underline">True</property>
                 <property name="icon_widget">del_bookmark</property>
                 <signal name="clicked" handler="on_btn_del_bookmark_clicked" swapped="no"/>
