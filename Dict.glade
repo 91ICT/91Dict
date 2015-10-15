@@ -365,16 +365,6 @@
       </object>
     </child>
   </object>
-  <object class="GtkListStore" id="entry_completion_list_store">
-    <columns>
-      <!-- column-name gchararray1 -->
-      <column type="gchararray"/>
-    </columns>
-  </object>
-  <object class="GtkEntryCompletion" id="entry_completion">
-    <property name="model">entry_completion_list_store</property>
-    <property name="inline_completion">True</property>
-  </object>
   <object class="GtkListStore" id="list_word_list_store">
     <columns>
       <!-- column-name gchararray1 -->
@@ -574,7 +564,6 @@
                 <property name="primary_icon_name">edit-find-symbolic</property>
                 <property name="primary_icon_activatable">False</property>
                 <property name="primary_icon_sensitive">False</property>
-                <property name="completion">entry_completion</property>
                 <signal name="search-changed" handler="func_search_word" swapped="no"/>
               </object>
               <packing>

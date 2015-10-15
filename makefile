@@ -6,7 +6,7 @@ LIB         = ./lib
 SRCS        = 91ict.c  main.c callbacks.c
 OBJS        = $(SRCS:.c=.o)
 EXECUTABLE  = 91Dict
-DB          = foldoc-dict.data  foldoc-soundex.data bookmark.data
+DB          = foldoc-dict.data  foldoc-soundex.data bookmark.data suggests.data
 
 all: $(SRCS) $(EXECUTABLE)
 
