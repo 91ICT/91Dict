@@ -76,6 +76,12 @@
       </object>
     </child>
   </object>
+  <object class="GtkListStore" id="dict_list">
+    <columns>
+      <!-- column-name dict -->
+      <column type="gchararray"/>
+    </columns>
+  </object>
   <object class="GtkAboutDialog" id="dlg_About">
     <property name="can_focus">False</property>
     <property name="type">popup</property>
@@ -552,6 +558,42 @@
             <property name="margin_top">7</property>
             <property name="margin_bottom">7</property>
             <property name="show_arrow">False</property>
+            <child>
+              <object class="GtkToolItem" id="toolbutton2">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="margin_left">1</property>
+                <property name="margin_right">1</property>
+                <child>
+                  <object class="GtkComboBoxText" id="dict_choose">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="margin_left">1</property>
+                    <property name="margin_right">1</property>
+                    <property name="active">0</property>
+                    <items>
+                      <item id="foldoc" translatable="yes">FOLDOC</item>
+                      <item id="en-vn" translatable="yes">ENG-VIE</item>
+                    </items>
+                    <signal name="changed" handler="on_dict_choose_changed" swapped="no"/>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkSeparatorToolItem" id="toolbutton4">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
             <child>
               <object class="GtkToolButton" id="btn_bookmark">
                 <property name="visible">True</property>

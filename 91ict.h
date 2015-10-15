@@ -8,10 +8,16 @@
 int check_file_exist(const char *file_name);
 
 // create db file from foldoc data file
-void foldoc_load_2_tree(BTA *tree, const char *foldoc_file);
+void FOLDOC_load_2_tree(BTA *tree, const char *foldoc_file);
+
+// create db file from foldoc eng-vie
+void ENG_VIE_load_2_tree(BTA *tree, const char *eng_vie_file);
 
 // Create soundex db file from word db file
 void gen_soundex_db(BTA *soundex_t, BTA *word_t);
+
+// change dictionary
+gboolean change_dict(gchar *name_dict, ChData *data);
 
 // soundex find similar string
 char *soundex(const char *in);

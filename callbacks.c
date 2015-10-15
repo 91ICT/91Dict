@@ -15,6 +15,16 @@ on_main_window_destroy(GtkWidget *main_window) {
 /***********************
 *     MAIN WINDOW     *
 ***********************/
+//
+G_MODULE_EXPORT void
+on_dict_choose_changed(GtkComboBoxText *combo, ChData *data){
+	if(change_dict(gtk_combo_box_text_get_active_text(combo), data)) {
+		status_dialog( (GtkWindow*) data->main_window, "Change dict complete");
+	} else {
+		status_dialog( (GtkWindow*) data->main_window, "Change dict failed !!");
+	}
+}
+
 // for short cut
 G_MODULE_EXPORT gboolean
 on_key_press_short_cut(GtkWidget *window, GdkEventKey *event, ChData *data) {

@@ -17,7 +17,7 @@ int check_file_exist(const char *file_name) {
 }
 
 // create db file from foldoc data file
-void foldoc_load_2_tree(BTA *tree, const char *foldoc_file) {
+void FOLDOC_load_2_tree(BTA *tree, const char *foldoc_file) {
 	if (tree == NULL) {
 		fprintf(stderr, "ERROR: NULL value %s:%d\n", __FILE__, __LINE__);
 		exit(1);
@@ -64,6 +64,59 @@ void foldoc_load_2_tree(BTA *tree, const char *foldoc_file) {
 	fclose(f);
 }
 
+// create db file from foldoc eng-vie
+void ENG_VIE_load_2_tree(BTA *tree, const char *eng_vie_file) {
+	if (tree == NULL) {
+		fprintf(stderr, "ERROR: NULL value %s:%d\n", __FILE__, __LINE__);
+		exit(1);
+	}
+	FILE *f;
+
+	f = fopen(eng_vie_file, "r");
+	if (f == NULL) {
+		fprintf(stderr, "ERROR: NULL value %s:%d\n", __FILE__, __LINE__);
+		exit(1);
+	}
+
+	int n = 0;
+	char word[100],
+	     mean[100000];
+	char temp[100];
+
+	while (!feof(f))
+	{
+		fgets(temp, 100, f);
+		if (temp[0] == '@')
+		{	// if word
+			temp[0] = ' ';
+			if (n == 0) // if first time
+			{
+				n++;
+				strcpy(word, temp + 1);
+				word[strlen(temp) - 2] = '\0';
+			}
+			else
+			{
+				mean[strlen(mean) - 1] = '\0';
+				btins(tree, word, mean, strlen(mean) + 1);
+				strcpy(mean, "\n"); // free
+				n++;
+				strcpy(word, temp + 1);
+				word[strlen(temp) - 2] = '\0';
+			}
+		} // mean
+		else {
+			temp[0] = '\t';
+			strcat(mean, temp);
+		}
+
+	}
+	mean[strlen(mean) - 1] = '\0';
+	btins(tree, word, mean, strlen(mean) + 1);
+
+	fclose(f);
+}
+
 // Create soundex db file from word db file
 void gen_soundex_db(BTA *soundex_t, BTA *word_t) {
 	if (word_t == NULL ||  soundex_t == NULL) {
@@ -98,6 +151,65 @@ void gen_soundex_db(BTA *soundex_t, BTA *word_t) {
 	}
 	btpos(word_t, ZSTART);
 
+}
+
+// change dictionary
+gboolean change_dict(gchar *name_dict, ChData *data) {
+	if (name_dict == NULL || data == NULL) {
+		fprintf(stderr, "ERROR: NULL value %s:%d\n", __FILE__, __LINE__);
+		exit(1);
+	}
+	btcls(data->tree_soundex);
+	btcls(data->tree_word);
+	btcls(data->tree_bookmark);
+	btcls(data->tree_suggests);
+	gtk_list_store_clear(data->bookmark_list_store);
+	gtk_list_store_clear(data->list_word_list_store);
+	gtk_list_store_clear(data->entry_completion_list_store);
+
+
+#define OPEN_DICT(name) 	{ \
+	if (check_file_exist("./data/"#name"-dict.data"))\
+		data->tree_word = btopn("./data/"#name"-dict.data", 0, FALSE);\
+	else {\
+		data->tree_word = btcrt("./data/"#name"-dict.data", 0, FALSE);\
+		name##_load_2_tree(data->tree_word, #name);\
+	}\
+	if (check_file_exist("./data/"#name"-soundex.data"))\
+		data->tree_soundex = btopn("./data/"#name"-soundex.data", 0, FALSE);\
+	else {\
+		data->tree_soundex = btcrt("./data/"#name"-soundex.data", 0, FALSE);\
+		gen_soundex_db(data->tree_soundex, data->tree_word);\
+	}\
+	if (check_file_exist("./data/"#name"-bookmark.data"))\
+		data->tree_bookmark = btopn("./data/"#name"-bookmark.data", 0, FALSE);\
+	else {\
+		data->tree_bookmark = btcrt("./data/"#name"-bookmark.data", 0, FALSE);\
+	}\
+	if (check_file_exist("./data/"#name"-suggests.data"))\
+		data->tree_suggests = btopn("./data/"#name"-suggests.data", 0, FALSE);\
+	else {\
+		data->tree_suggests = btcrt("./data/"#name"-suggests.data", 0, FALSE);\
+	}\
+}
+
+
+	if (strcmp(name_dict, "FOLDOC") == 0) {
+		OPEN_DICT(FOLDOC);
+		return TRUE;
+	}
+
+	if (strcmp(name_dict, "ENG-VIE") == 0) {
+		OPEN_DICT(ENG_VIE);
+		return TRUE;
+	}
+
+	bookmark_init(data);
+	suggests_init(data);
+
+
+#undef OPEN_DICT
+	return FALSE;
 }
 
 char *soundex(const char *in) {
@@ -276,7 +388,7 @@ gboolean delete_word_from_dict(ChData *data, char *word) {
 			char *wordi = strtok (str, ";");
 			while (wordi != NULL)  {
 				if (count == 0)
-					if (strcmp(wordi, word) != 0){
+					if (strcmp(wordi, word) != 0) {
 						strcat(series_word, wordi);
 						wordi = strtok (NULL, ";");
 						count++;

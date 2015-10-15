@@ -13,30 +13,43 @@ main(int argc, char** argv) {
 	BTA *tree_word, *tree_soundex, *tree_bookmark, *tree_suggests;
 	btinit();
 
-	if (check_file_exist("foldoc-dict.data"))
-		tree_word = btopn("foldoc-dict.data", 0, FALSE);
-	else {
-		tree_word = btcrt("foldoc-dict.data", 0, FALSE);
-		foldoc_load_2_tree(tree_word, "FOLDOC");
+#define INIT_FILE_DATA(name) 	{ \
+	if (!check_file_exist("./data/"#name"-dict.data"))\
+		tree_word = btcrt("./data/"#name"-dict.data", 0, FALSE);\
+		name##_load_2_tree(tree_word, #name);\
+		gen_soundex_db(tree_soundex, tree_word);\
+		btcls(tree_soundex);\
+		btcls(tree_word);\
 	}
 
-	if (check_file_exist("foldoc-soundex.data"))
-		tree_soundex = btopn("foldoc-soundex.data", 0, FALSE);
+	INIT_FILE_DATA(ENG_VIE);
+
+#undef INIT_FILE_DATA
+
+	if (check_file_exist("./data/FOLDOC-dict.data"))
+		tree_word = btopn("./data/FOLDOC-dict.data", 0, FALSE);
 	else {
-		tree_soundex = btcrt("foldoc-soundex.data", 0, FALSE);
+		tree_word = btcrt("./data/FOLDOC-dict.data", 0, FALSE);
+		FOLDOC_load_2_tree(tree_word, "FOLDOC");
+	}
+
+	if (check_file_exist("./data/FOLDOC-soundex.data"))
+		tree_soundex = btopn("./data/FOLDOC-soundex.data", 0, FALSE);
+	else {
+		tree_soundex = btcrt("./data/FOLDOC-soundex.data", 0, FALSE);
 		gen_soundex_db(tree_soundex, tree_word);
 	}
 
-	if (check_file_exist("bookmark.data"))
-		tree_bookmark = btopn("bookmark.data", 0, FALSE);
+	if (check_file_exist("./data/FOLDOC-bookmark.data"))
+		tree_bookmark = btopn("./data/FOLDOC-bookmark.data", 0, FALSE);
 	else {
-		tree_bookmark = btcrt("bookmark.data", 0, FALSE);
+		tree_bookmark = btcrt("./data/FOLDOC-bookmark.data", 0, FALSE);
 	}
 
-	if (check_file_exist("suggests.data"))
-		tree_suggests = btopn("suggests.data", 0, FALSE);
+	if (check_file_exist("./data/FOLDOC-suggests.data"))
+		tree_suggests = btopn("./data/FOLDOC-suggests.data", 0, FALSE);
 	else {
-		tree_suggests = btcrt("suggests.data", 0, FALSE);
+		tree_suggests = btcrt("./data/FOLDOC-suggests.data", 0, FALSE);
 	}
 
 	/* Init GTK+ */

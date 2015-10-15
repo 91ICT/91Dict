@@ -6,7 +6,8 @@ LIB         = ./lib
 SRCS        = 91ict.c  main.c callbacks.c
 OBJS        = $(SRCS:.c=.o)
 EXECUTABLE  = 91Dict
-DB          = foldoc-dict.data  foldoc-soundex.data bookmark.data suggests.data
+# DATA          = foldoc-dict.data  foldoc-soundex.data bookmark.data suggests.data
+DATA_DIR	= data
 
 all: $(SRCS) $(EXECUTABLE)
 
@@ -17,13 +18,16 @@ profiling: CFLAGS += -pg
 profiling: all
 
 $(EXECUTABLE): $(OBJS)
+	if ! [ -d "./$(DATA_DIR)" ]; then mkdir ./$(DATA_DIR); fi
 	$(CC) -I$(INC) $(CFLAGS) $(OBJS) -o $@  -L$(LIB) $(LIBS)
 
 .c.o:
 	$(CC) -I$(INC) $(CFLAGS) -c $< -o $@ -L$(LIB) $(LIBS)
 
 clean:
-	rm -rf *.o $(EXECUTABLE) $(DB)
+	rm -rf *.o $(EXECUTABLE)
+	rm -rf $(DATA_DIR)
+	
 
 remake: clean all
 reprofiling: clean profiling
