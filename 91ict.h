@@ -26,8 +26,17 @@ gboolean edit_mean_word_from_dict(ChData *data, char *word, char *mean);
 // Support for delete function in edit dialog
 gboolean delete_word_from_dict(ChData *data, char *word);
 
+// Support for bookmark function for bookmark btn
+gboolean add_word_to_bookmark(ChData *data, char *word);
+
+// Support for bookmark function for del bookmark btn
+gboolean del_word_bookmark(ChData *data, char *word);
+
 /* Clear the Entry */
 void reset_Entry(GtkWidget *Entry);
+
+// bookmark init
+void bookmark_init(ChData *data);
 
 /* Clear the TextView */
 void reset_TextView(GtkWidget *TextView);

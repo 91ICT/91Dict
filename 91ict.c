@@ -180,7 +180,24 @@ gboolean add_word_to_dict(ChData *data, char *word, char *mean){
 
 		return TRUE;
 	} 
+	return FALSE;
+}
 
+// Support for bookmark function for bookmark btn
+gboolean add_word_to_bookmark(ChData *data, char *word){
+	if (word == NULL || data == NULL){
+			fprintf(stderr, "ERROR: NULL value %s:%d\n", __FILE__, __LINE__);
+			exit(1);
+		}
+		
+		int value;
+		if(bfndky(data->tree_bookmark, word, &value) != 0){
+			// Don't word on tree_bookmark
+			if(binsky(data->tree_bookmark, word, 1) != 0)
+				return FALSE;
+
+			return TRUE;
+		} 
 	return FALSE;
 }
 
@@ -273,6 +290,49 @@ end:
 		return TRUE;
 	} 
 	return FALSE;
+}
+
+// Support for bookmark function for del bookmark btn
+gboolean del_word_bookmark(ChData *data, char *word){
+	if (word == NULL || data == NULL) {
+		fprintf(stderr, "ERROR: NULL value %s:%d\n", __FILE__, __LINE__);
+		exit(1);
+	}
+
+	int value;
+
+	if(bfndky(data->tree_bookmark, word, &value) == 0){
+		// have word on tree_bookmark
+
+		if(bdelky(data->tree_bookmark, word) != 0)
+			return FALSE;
+
+		return TRUE;
+	} 
+
+	return FALSE;
+}
+
+// bookmark init
+void bookmark_init(ChData *data){
+	if(data == NULL) {
+		fprintf(stderr, "ERROR: NULL value %s:%d\n", __FILE__, __LINE__);
+		exit(1);
+	}
+	if(data->tree_bookmark == NULL)
+		return;
+
+	btpos(data->tree_bookmark, ZSTART);
+	while(1){
+
+        char word[200];
+        int value;
+        if(bnxtky(data->tree_bookmark, word, &value) == QNOKEY)
+            break;
+		GtkTreeIter  iter;
+		gtk_list_store_append(data->bookmark_list_store, &iter);
+		gtk_list_store_set (data->bookmark_list_store, &iter, 0, word, -1);
+   }
 }
 
 /* Clear the Entry */

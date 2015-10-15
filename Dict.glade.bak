@@ -2,85 +2,6 @@
 <!-- Generated with glade 3.18.3 -->
 <interface>
   <requires lib="gtk+" version="3.10"/>
-  <object class="GtkImage" id="bookmark_image">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="icon_name">bookmark-add</property>
-  </object>
-  <object class="GtkListStore" id="bookmark_list_store">
-    <columns>
-      <!-- column-name gchararray1 -->
-      <column type="gchararray"/>
-    </columns>
-  </object>
-  <object class="GtkImage" id="del_bookmark">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="pixbuf">del_bnk_17px.png</property>
-  </object>
-  <object class="GtkImage" id="delete_deletedlg">
-    <property name="visible">True</property>
-    <property name="can_focus">False</property>
-    <property name="stock">gtk-apply</property>
-  </object>
-  <object class="GtkMessageDialog" id="dlg_Delete">
-    <property name="can_focus">False</property>
-    <property name="title" translatable="yes">Delete</property>
-    <property name="window_position">center-always</property>
-    <property name="type_hint">menu</property>
-    <property name="text" translatable="yes">Are you sure to delete this word?</property>
-    <child internal-child="vbox">
-      <object class="GtkBox" id="messagedialog-vbox1">
-        <property name="can_focus">False</property>
-        <property name="orientation">vertical</property>
-        <property name="spacing">2</property>
-        <child internal-child="action_area">
-          <object class="GtkButtonBox" id="messagedialog-action_area1">
-            <property name="can_focus">False</property>
-            <property name="layout_style">end</property>
-            <child>
-              <object class="GtkButton" id="btn_cancel_deletedlg">
-                <property name="label">gtk-cancel</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="use_stock">True</property>
-                <property name="always_show_image">True</property>
-                <signal name="clicked" handler="on_btn_Cancel_clicked_del_dlg" swapped="no"/>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="btn_delete_deletedlg">
-                <property name="label" translatable="yes">Delete</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="image">delete_deletedlg</property>
-                <property name="always_show_image">True</property>
-                <signal name="clicked" handler="on_btn_del_clicked_del_dlg" swapped="no"/>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">True</property>
-            <property name="pack_type">end</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
-      </object>
-    </child>
-  </object>
   <object class="GtkAboutDialog" id="dlg_About">
     <property name="can_focus">False</property>
     <property name="type">popup</property>
@@ -118,6 +39,35 @@
       </object>
     </child>
   </object>
+  <object class="GtkImage" id="image1">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-edit</property>
+  </object>
+  <object class="GtkImage" id="img_About_btn">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-dialog-info</property>
+    <property name="icon_size">3</property>
+  </object>
+  <object class="GtkImage" id="img_Add_2_btn">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-add</property>
+    <property name="icon_size">3</property>
+  </object>
+  <object class="GtkImage" id="img_Add_btn">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-add</property>
+    <property name="icon_size">3</property>
+  </object>
+  <object class="GtkImage" id="img_Cancel_btn">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-cancel</property>
+    <property name="icon_size">3</property>
+  </object>
   <object class="GtkDialog" id="dlg_Add">
     <property name="width_request">400</property>
     <property name="height_request">250</property>
@@ -141,11 +91,11 @@
             <property name="layout_style">end</property>
             <child>
               <object class="GtkButton" id="btn_Cancel_adddlg">
-                <property name="label">gtk-cancel</property>
+                <property name="label" translatable="yes">  Cancel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="use_stock">True</property>
+                <property name="image">img_Cancel_btn</property>
                 <property name="xalign">0.47999998927116394</property>
                 <property name="always_show_image">True</property>
                 <signal name="clicked" handler="on_btn_Cancel_add_clicked" swapped="no"/>
@@ -158,12 +108,12 @@
             </child>
             <child>
               <object class="GtkButton" id="btn_Add_adddlg">
-                <property name="label">gtk-add</property>
+                <property name="label" translatable="yes">  Add</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <property name="image">img_Add_2_btn</property>
                 <property name="relief">half</property>
-                <property name="use_stock">True</property>
                 <property name="always_show_image">True</property>
                 <signal name="clicked" handler="on_btn_Add_add_clicked" swapped="no"/>
               </object>
@@ -243,6 +193,12 @@
       </object>
     </child>
   </object>
+  <object class="GtkImage" id="img_Cancel_btn1">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-cancel</property>
+    <property name="icon_size">3</property>
+  </object>
   <object class="GtkDialog" id="dlg_edit">
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Edit</property>
@@ -263,11 +219,11 @@
             <property name="layout_style">end</property>
             <child>
               <object class="GtkButton" id="btn_cancel_editdlg">
-                <property name="label">gtk-cancel</property>
+                <property name="label" translatable="yes">  Cancel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="use_stock">True</property>
+                <property name="image">img_Cancel_btn1</property>
                 <property name="xalign">0.47999998927116394</property>
                 <property name="always_show_image">True</property>
                 <signal name="clicked" handler="on_btn_Cancel_clicked_edit_dlg" swapped="no"/>
@@ -280,11 +236,11 @@
             </child>
             <child>
               <object class="GtkButton" id="btn_edit_editdlg">
-                <property name="label">gtk-edit</property>
+                <property name="label" translatable="yes">Edit</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="use_stock">True</property>
+                <property name="image">image1</property>
                 <property name="yalign">0.50999999046325684</property>
                 <property name="always_show_image">True</property>
                 <signal name="clicked" handler="on_btn_edit_clicked_edit_dlg" swapped="no"/>
@@ -365,17 +321,87 @@
       </object>
     </child>
   </object>
-  <object class="GtkListStore" id="entry_completion_list_store">
-    <columns>
-      <!-- column-name gchararray1 -->
-      <column type="gchararray"/>
-    </columns>
+  <object class="GtkImage" id="img_Cancel_delete">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-cancel</property>
   </object>
-  <object class="GtkEntryCompletion" id="entry_completion">
-    <property name="model">entry_completion_list_store</property>
-    <property name="inline_completion">True</property>
+  <object class="GtkImage" id="img_Delete_btn">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-delete</property>
+    <property name="icon_size">3</property>
   </object>
-  <object class="GtkListStore" id="list_word_list_store">
+  <object class="GtkImage" id="img_Delete_delete">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-apply</property>
+  </object>
+  <object class="GtkMessageDialog" id="dlg_Delete">
+    <property name="can_focus">False</property>
+    <property name="title" translatable="yes">Delete</property>
+    <property name="window_position">center-always</property>
+    <property name="type_hint">menu</property>
+    <property name="text" translatable="yes">Are you sure to delete this word?</property>
+    <child internal-child="vbox">
+      <object class="GtkBox" id="messagedialog-vbox1">
+        <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">2</property>
+        <child internal-child="action_area">
+          <object class="GtkButtonBox" id="messagedialog-action_area1">
+            <property name="can_focus">False</property>
+            <property name="layout_style">end</property>
+            <child>
+              <object class="GtkButton" id="btn_cancel_deletedlg">
+                <property name="label" translatable="yes">  Cancel</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="image">img_Cancel_delete</property>
+                <property name="always_show_image">True</property>
+                <signal name="clicked" handler="on_btn_Cancel_clicked_del_dlg" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="btn_delete_deletedlg">
+                <property name="label" translatable="yes">  Delete</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="image">img_Delete_delete</property>
+                <property name="always_show_image">True</property>
+                <signal name="clicked" handler="on_btn_del_clicked_del_dlg" swapped="no"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="pack_type">end</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkImage" id="img_Edit_btn">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="stock">gtk-edit</property>
+    <property name="icon_size">3</property>
+  </object>
+  <object class="GtkListStore" id="list_store">
     <columns>
       <!-- column-name gchararray1 -->
       <column type="gchararray"/>
@@ -430,44 +456,23 @@
           <object class="GtkButtonBox" id="btnbox_Toolbar">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="spacing">2</property>
+            <property name="spacing">20</property>
             <property name="homogeneous">True</property>
             <property name="baseline_position">top</property>
             <property name="layout_style">spread</property>
             <child>
-              <object class="GtkButton" id="btn_bookmark">
-                <property name="label" translatable="yes">Bookmark</property>
+              <object class="GtkButton" id="btn_Add">
+                <property name="label" translatable="yes">  Add</property>
                 <property name="width_request">100</property>
                 <property name="height_request">50</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="opacity">0.98039215686274506</property>
-                <property name="image">bookmark_image</property>
+                <property name="opacity">0.97999999999999998</property>
+                <property name="image">img_Add_btn</property>
                 <property name="yalign">0.47999998927116394</property>
                 <property name="always_show_image">True</property>
-                <signal name="clicked" handler="on_btn_bookmark_clicked" swapped="no"/>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="btn_del_bookmark">
-                <property name="label" translatable="yes">Delete Bookmark</property>
-                <property name="width_request">100</property>
-                <property name="height_request">50</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="opacity">0.98039215686274506</property>
-                <property name="image">del_bookmark</property>
-                <property name="xalign">0.46000000834465027</property>
-                <property name="yalign">0.47999998927116394</property>
-                <property name="always_show_image">True</property>
-                <signal name="clicked" handler="on_btn_del_bookmark_clicked" swapped="no"/>
+                <signal name="clicked" handler="on_btn_Add_clicked" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -476,18 +481,16 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="btn_Add">
-                <property name="label">gtk-add</property>
-                <property name="width_request">100</property>
+              <object class="GtkButton" id="btn_Edit">
+                <property name="label" translatable="yes">  Edit</property>
                 <property name="height_request">50</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="opacity">0.97999999999999998</property>
-                <property name="use_stock">True</property>
-                <property name="yalign">0.47999998927116394</property>
+                <property name="image">img_Edit_btn</property>
+                <property name="xalign">0.50999999046325684</property>
                 <property name="always_show_image">True</property>
-                <signal name="clicked" handler="on_btn_Add_clicked" swapped="no"/>
+                <signal name="clicked" handler="on_btn_edit_clicked" swapped="no"/>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -496,31 +499,13 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="btn_Edit">
-                <property name="label">gtk-edit</property>
-                <property name="height_request">50</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="use_stock">True</property>
-                <property name="xalign">0.50999999046325684</property>
-                <property name="always_show_image">True</property>
-                <signal name="clicked" handler="on_btn_edit_clicked" swapped="no"/>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">True</property>
-                <property name="position">3</property>
-              </packing>
-            </child>
-            <child>
               <object class="GtkButton" id="btn_Delete">
-                <property name="label">gtk-delete</property>
+                <property name="label" translatable="yes">  Delete</property>
                 <property name="height_request">50</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="use_stock">True</property>
+                <property name="image">img_Delete_btn</property>
                 <property name="xalign">0.50999999046325684</property>
                 <property name="yalign">0.4699999988079071</property>
                 <property name="always_show_image">True</property>
@@ -529,12 +514,12 @@
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">True</property>
-                <property name="position">4</property>
+                <property name="position">3</property>
               </packing>
             </child>
             <child>
               <object class="GtkButton" id="btn_About">
-                <property name="label">gtk-about</property>
+                <property name="label" translatable="yes">  About</property>
                 <property name="name">dlg_About</property>
                 <property name="width_request">0</property>
                 <property name="height_request">50</property>
@@ -542,8 +527,8 @@
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="valign">start</property>
+                <property name="image">img_About_btn</property>
                 <property name="relief">half</property>
-                <property name="use_stock">True</property>
                 <property name="xalign">0.50999999046325684</property>
                 <property name="yalign">0.46000000834465027</property>
                 <property name="always_show_image">True</property>
@@ -552,7 +537,7 @@
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">True</property>
-                <property name="position">5</property>
+                <property name="position">4</property>
               </packing>
             </child>
           </object>
@@ -574,7 +559,6 @@
                 <property name="primary_icon_name">edit-find-symbolic</property>
                 <property name="primary_icon_activatable">False</property>
                 <property name="primary_icon_sensitive">False</property>
-                <property name="completion">entry_completion</property>
                 <signal name="search-changed" handler="func_search_word" swapped="no"/>
               </object>
               <packing>
@@ -584,103 +568,37 @@
               </packing>
             </child>
             <child>
-              <object class="GtkNotebook" id="tab">
+              <object class="GtkScrolledWindow" id="scrolledwindow1">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <signal name="switch-page" handler="tab_switch_page_cb" swapped="no"/>
+                <property name="margin_top">5</property>
+                <property name="shadow_type">in</property>
+                <property name="min_content_height">310</property>
                 <child>
-                  <object class="GtkScrolledWindow" id="scrolledwindow1">
+                  <object class="GtkTreeView" id="tree_view">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="margin_top">5</property>
-                    <property name="shadow_type">in</property>
-                    <property name="min_content_height">310</property>
+                    <property name="model">list_store</property>
+                    <property name="headers_visible">False</property>
+                    <property name="search_column">0</property>
+                    <property name="enable_grid_lines">horizontal</property>
+                    <child internal-child="selection">
+                      <object class="GtkTreeSelection" id="tree_view_selection">
+                        <signal name="changed" handler="on_changed" swapped="no"/>
+                      </object>
+                    </child>
                     <child>
-                      <object class="GtkTreeView" id="list_word_tree_view">
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="model">list_word_list_store</property>
-                        <property name="headers_visible">False</property>
-                        <property name="search_column">0</property>
-                        <property name="enable_grid_lines">horizontal</property>
-                        <child internal-child="selection">
-                          <object class="GtkTreeSelection" id="list_word_tree_view_selection">
-                            <signal name="changed" handler="on_changed" swapped="no"/>
-                          </object>
-                        </child>
+                      <object class="GtkTreeViewColumn" id="treeviewcolumn2">
+                        <property name="title" translatable="yes">word</property>
                         <child>
-                          <object class="GtkTreeViewColumn" id="treeviewcolumn2">
-                            <property name="title" translatable="yes">word</property>
-                            <child>
-                              <object class="GtkCellRendererText" id="cellrenderertext1"/>
-                              <attributes>
-                                <attribute name="text">0</attribute>
-                              </attributes>
-                            </child>
-                          </object>
+                          <object class="GtkCellRendererText" id="cellrenderertext1"/>
+                          <attributes>
+                            <attribute name="text">0</attribute>
+                          </attributes>
                         </child>
                       </object>
                     </child>
                   </object>
-                </child>
-                <child type="tab">
-                  <object class="GtkLabel" id="label2">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">List Word</property>
-                  </object>
-                  <packing>
-                    <property name="tab_fill">False</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkScrolledWindow" id="scrolledwindow2">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="margin_top">5</property>
-                    <property name="shadow_type">in</property>
-                    <property name="min_content_height">310</property>
-                    <child>
-                      <object class="GtkTreeView" id="bookmark_tree_view">
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="model">bookmark_list_store</property>
-                        <property name="headers_visible">False</property>
-                        <property name="search_column">0</property>
-                        <property name="enable_grid_lines">horizontal</property>
-                        <child internal-child="selection">
-                          <object class="GtkTreeSelection" id="bookmark_tree_view_selection">
-                            <signal name="changed" handler="on_changed" swapped="no"/>
-                          </object>
-                        </child>
-                        <child>
-                          <object class="GtkTreeViewColumn" id="treeviewcolumn1">
-                            <property name="title" translatable="yes">word</property>
-                            <child>
-                              <object class="GtkCellRendererText" id="cellrenderertext2"/>
-                              <attributes>
-                                <attribute name="text">0</attribute>
-                              </attributes>
-                            </child>
-                          </object>
-                        </child>
-                      </object>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="position">1</property>
-                  </packing>
-                </child>
-                <child type="tab">
-                  <object class="GtkLabel" id="label3">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">Bookmark</property>
-                  </object>
-                  <packing>
-                    <property name="position">1</property>
-                    <property name="tab_fill">False</property>
-                  </packing>
                 </child>
               </object>
               <packing>

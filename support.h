@@ -25,19 +25,25 @@ struct _ChData
      GtkWidget *dlg_Delete;  /* Delete dialog */
      GtkWidget *word_entry_add_dlg; // add 
      GtkWidget *meaning_txt_add_dlg;
-     GtkWidget *tree_view;
      GtkWidget *search_word;
      GtkWidget *txt_meaning;
-     GtkListStore *list_store;
+     GtkListStore *bookmark_list_store;
+     GtkListStore *list_word_list_store;
+     GtkListStore *entry_completion_list_store;
      BTA *tree_word; //  key word, value mean
      BTA *tree_soundex; // key string of soundex, string contain list of word has same string of soundex sperat separated by ";"
+     BTA *tree_bookmark;
      GtkWidget *word_label_edit_dlg;
      GtkWidget *meaning_txt_edit_dlg;
      GtkWidget *dlg_edit;
-     GtkTreeSelection *tree_view_selection;
+     GtkTreeSelection *list_word_tree_view_selection;
+     GtkTreeSelection *bookmark_tree_view_selection;
+     GtkEntryCompletion *entry_completion;
      GtkWidget *btn_Add;
      GtkWidget *btn_Edit;
      GtkWidget *btn_Delete;
+     GtkWidget *btn_bookmark;
+     GtkWidget *btn_del_bookmark;
      gboolean word_meaningful_search_entry; // if word_meaningful = TRUE --> current word in search entry is has mean otherwise is false
 
      /* Insert more widgets to use */
