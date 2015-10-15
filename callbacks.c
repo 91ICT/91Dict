@@ -137,7 +137,6 @@ func_search_word (GtkSearchEntry *entry, ChData *data) {
 // clear
 		gtk_list_store_clear(data->list_word_list_store);
 		GtkTreeIter  iter;
-
 		char str[1000];
 		int count = 0;
 		strcpy(str, series_word);
@@ -340,9 +339,9 @@ on_btn_edit_clicked_edit_dlg(GtkButton *btn_, ChData *data) {
 
 	/* Edit the word into the tree */
 	if (edit_mean_word_from_dict(data, word, meaning)) {
-		status_dialog( (GtkWindow*) data->dlg_Add, "Successfully!");
+		status_dialog( (GtkWindow*) data->dlg_edit, "Successfully!");
 	} else {
-		status_dialog( (GtkWindow*) data->dlg_Add, "An error has occured!\nPlease try again");
+		status_dialog( (GtkWindow*) data->dlg_edit, "An error has occured!\nPlease try again");
 	}
 	/* reset text field */
 	reset_TextView(data->meaning_txt_edit_dlg);
@@ -388,15 +387,15 @@ on_btn_del_clicked_del_dlg(GtkButton *btn_, ChData *data) {
 
 	/* Delete the word into the tree */
 	if (delete_word_from_dict(data, word)) {
-		status_dialog( (GtkWindow*) data->dlg_Add, "Successfully!");
+		status_dialog( (GtkWindow*) data->dlg_Delete, "Successfully!");
 	} else {
-		status_dialog( (GtkWindow*) data->dlg_Add, "An error has occured!\nPlease try again");
+		status_dialog( (GtkWindow*) data->dlg_Delete, "An error has occured!\nPlease try again");
 	}
 	/* reset text field */
 
 	gtk_widget_hide(data->dlg_Delete);
-	reset_Entry(data->search_word);
-	gtk_list_store_clear(data->list_word_list_store);
+	g_signal_emit_by_name ((gpointer) data->search_word, "search-changed");
+
 
 	/* free memory */
 	if (flag == 1)
