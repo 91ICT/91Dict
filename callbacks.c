@@ -17,8 +17,8 @@ on_main_window_destroy(GtkWidget *main_window) {
 ***********************/
 //
 G_MODULE_EXPORT void
-on_dict_choose_changed(GtkComboBoxText *combo, ChData *data){
-	if(change_dict(gtk_combo_box_text_get_active_text(combo), data)) {
+on_dict_choose_changed(GtkComboBoxText *combo, ChData *data) {
+	if (change_dict(gtk_combo_box_text_get_active_text(combo), data)) {
 		status_dialog( (GtkWindow*) data->main_window, "Change dict complete");
 	} else {
 		status_dialog( (GtkWindow*) data->main_window, "Change dict failed !!");
@@ -70,7 +70,7 @@ on_key_press_short_cut(GtkWidget *window, GdkEventKey *event, ChData *data) {
 			return TRUE;
 		}
 		break;
-	
+
 	default:
 		return FALSE;
 	}
@@ -102,13 +102,14 @@ on_changed(GtkTreeSelection *treeselection, ChData *data) {
 		GtkTextBuffer *Buffer;
 		Buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(data->txt_meaning));
 		gtk_text_buffer_set_text(Buffer, "", -1);
-		if (btsel(data->tree_word, word, meaning, sizeof(meaning), &rsize) == 0){
+		if (btsel(data->tree_word, word, meaning, sizeof(meaning), &rsize) == 0) {
 			GtkTreeIter  iter;
 			// if(add_word_to_suggests(data, word)){
 			// 	gtk_list_store_append(data->entry_completion_list_store, &iter);
 			// 	gtk_list_store_set (data->entry_completion_list_store, &iter, 0, word, -1);
 			// }
-			gtk_text_buffer_set_text(Buffer, meaning, -1);
+			gchar *mean_utf_8 = g_locale_to_utf8(meaning, -1, NULL, NULL, NULL);
+			gtk_text_buffer_set_text(Buffer, mean_utf_8, -1);
 		}
 		g_free(word);
 	}
@@ -122,7 +123,7 @@ func_search_word (GtkSearchEntry *entry, ChData *data) {
 
 	Buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(data->txt_meaning));
 	gtk_text_buffer_set_text(Buffer, "", -1);
-	if(strlen(search_word) == 0){
+	if (strlen(search_word) == 0) {
 		gtk_list_store_clear(data->list_word_list_store);
 		reset_TextView(data->txt_meaning);
 		return;
@@ -135,11 +136,12 @@ func_search_word (GtkSearchEntry *entry, ChData *data) {
 		GtkTreeIter  iter;
 		gtk_list_store_append(data->list_word_list_store, &iter);
 		gtk_list_store_set (data->list_word_list_store, &iter, 0, search_word, -1);
-		gtk_text_buffer_set_text(Buffer, meaning, -1);
-		if(add_word_to_suggests(data, search_word)){
+		gchar *mean_utf_8 = g_locale_to_utf8(meaning, -1, NULL, NULL, NULL);
+		gtk_text_buffer_set_text(Buffer, mean_utf_8, -1);
+		if (add_word_to_suggests(data, search_word)) {
 			gtk_list_store_append(data->entry_completion_list_store, &iter);
 			gtk_list_store_set (data->entry_completion_list_store, &iter, 0, search_word, -1);
-		}	
+		}
 		data->word_meaningful_search_entry = TRUE;
 	} else {
 		char *soundex_str = soundex(search_word);
@@ -363,8 +365,8 @@ on_btn_edit_clicked_edit_dlg(GtkButton *btn_, ChData *data) {
 
 	GtkTextBuffer *Buffer;
 	Buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(data->txt_meaning));
-	gtk_text_buffer_set_text(Buffer, meaning, -1);
-
+	gchar *mean_utf_8 = g_locale_to_utf8(meaning, -1, NULL, NULL, NULL);
+	gtk_text_buffer_set_text(Buffer, mean_utf_8, -1);
 
 	/* free memory */
 	g_free(meaning);
