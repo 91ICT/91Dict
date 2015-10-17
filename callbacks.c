@@ -118,7 +118,7 @@ on_changed(GtkTreeSelection *treeselection, ChData *data) {
 // The “search-changed” signal fpr search entry
 G_MODULE_EXPORT void
 func_search_word (GtkSearchEntry *entry, ChData *data) {
-	gchar *search_word = gtk_entry_get_text(GTK_ENTRY(entry));
+	gchar *search_word = (gchar *)gtk_entry_get_text(GTK_ENTRY(entry));
 	GtkTextBuffer *Buffer;
 
 	Buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(data->txt_meaning));
@@ -192,7 +192,7 @@ on_btn_bookmark_clicked(GtkButton *btn_Bookmark, ChData *data) {
 		}
 		g_free(word);
 	} else {
-		gchar *search_word = gtk_entry_get_text(GTK_ENTRY(data->search_word));
+		gchar *search_word = (char *)gtk_entry_get_text(GTK_ENTRY(data->search_word));
 		if ((strcmp(search_word, "") == 0) || !(data->word_meaningful_search_entry))
 			status_dialog( (GtkWindow*) data->main_window, "Please select word on list !");
 		else {
@@ -239,7 +239,7 @@ on_btn_edit_clicked(GtkButton *btn_Add, ChData *data) {
 		gtk_widget_hide(data->dlg_edit);
 		g_free(word);
 	} else {
-		gchar *search_word = gtk_entry_get_text(GTK_ENTRY(data->search_word));
+		gchar *search_word = (char *)gtk_entry_get_text(GTK_ENTRY(data->search_word));
 		if ((strcmp(search_word, "") == 0) || !(data->word_meaningful_search_entry))
 			status_dialog( (GtkWindow*) data->main_window, "Please select word on list !");
 		else {
@@ -264,7 +264,7 @@ on_btn_Delete_clicked(GtkButton *btn_Delete, ChData *data) {
 		gtk_widget_hide(data->dlg_Delete);
 		g_free(word);
 	} else {
-		gchar *search_word = gtk_entry_get_text(GTK_ENTRY(data->search_word));
+		gchar *search_word = (char *)gtk_entry_get_text(GTK_ENTRY(data->search_word));
 		if ((strcmp(search_word, "") == 0) || !(data->word_meaningful_search_entry))
 			status_dialog( (GtkWindow*) data->main_window, "Please select word on list !");
 		else {
@@ -314,7 +314,7 @@ on_btn_Cancel_add_clicked(GtkButton *btn_Cancel_add, ChData *data) {
 /* ADD button handler */
 G_MODULE_EXPORT void
 on_btn_Add_add_clicked(GtkButton *btn_Add_add, ChData *data) {
-	const gchar *word = gtk_entry_get_text(GTK_ENTRY(data->word_entry_add_dlg));
+	gchar *word = (gchar *)gtk_entry_get_text(GTK_ENTRY(data->word_entry_add_dlg));
 
 	/* Get text from GtkTextView */
 	GtkTextIter start, end;
@@ -344,7 +344,7 @@ on_btn_Add_add_clicked(GtkButton *btn_Add_add, ChData *data) {
 /* Edit button handler */
 G_MODULE_EXPORT void
 on_btn_edit_clicked_edit_dlg(GtkButton *btn_, ChData *data) {
-	gchar *word = gtk_label_get_text(GTK_LABEL(data->word_label_edit_dlg));
+	gchar *word = (gchar *)gtk_label_get_text(GTK_LABEL(data->word_label_edit_dlg));
 
 	/* Get text from GtkTextView */
 	GtkTextIter start, end;
@@ -396,7 +396,7 @@ on_btn_del_clicked_del_dlg(GtkButton *btn_, ChData *data) {
 		gtk_tree_model_get(model, &iter, 0, &word,  -1);
 		flag = 1;
 	} else {
-		word = gtk_entry_get_text(GTK_ENTRY(data->search_word));
+		word = (char *)gtk_entry_get_text(GTK_ENTRY(data->search_word));
 		if (strcmp(word, "") == 0)
 			status_dialog( (GtkWindow*) data->main_window, "Please select word on list !");
 	}
