@@ -579,7 +579,7 @@ void status_dialog(GtkWindow *parent, gchar *message)
 	GtkWidget *dialog;
 	dialog = gtk_message_dialog_new(parent,
 	                                GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
-	                                GTK_MESSAGE_INFO, GTK_BUTTONS_CLOSE, message);
+	                                GTK_MESSAGE_INFO, GTK_BUTTONS_CLOSE, "%s", message);
 	gtk_window_set_title(GTK_WINDOW(dialog), "Status");
 	gtk_dialog_run(GTK_DIALOG(dialog));
 	gtk_widget_destroy(dialog);
