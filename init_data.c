@@ -12,6 +12,7 @@ main(int argc, char** argv) {
 
 #define INIT_FILE_DATA(name) 	{ \
 	if (!check_file_exist("./data/"#name"-dict.data")) {\
+		printf("%s\n", "Begin create data for "#name);\
 		tree_word = btcrt("./data/"#name"-dict.data", 0, TRUE);\
 		name##_load_2_tree(tree_word, #name);\
 		if (check_file_exist("./data/"#name"-soundex.data"))\
@@ -22,14 +23,15 @@ main(int argc, char** argv) {
 		}\
 		btcls(tree_soundex);\
 		btcls(tree_word);\
+		printf("%s\n", "Create data for "#name" done");\
 	}\
 }
-	printf("%s\n", "Begin create data for ENG VN");
+
+
+	INIT_FILE_DATA(FOLDOC);
 	INIT_FILE_DATA(ENG_VN);
-	printf("%s\n", "Create data for ENG VN Done");
-	printf("%s\n", "Begin create data for VN ENG");
 	INIT_FILE_DATA(VN_ENG);
-	printf("%s\n", "Create data for VN ENG Done");
+
 
 #undef INIT_FILE_DATA
 
