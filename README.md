@@ -24,6 +24,8 @@ First version of program
 ## LICENSE
 ---
 
+>Dictionary Data: Copyright (C) 1997-2003 The Free Vietnamese Dictionary Project
+
 > Lib: Btree - GNU GENERAL PUBLIC LICENSE ver. 2   
 [Btree homepage](http://www.hydrus.org.uk/doc/bt/html/)
 
