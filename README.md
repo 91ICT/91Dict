@@ -13,6 +13,9 @@
 `ctrl + delete` : delete bookmark selected word on bookmark  
 ## Change log
 ---
+###1.4.0
+Add Vietnamese English dictionary
+Fix error quit with ctrl + C lost data 
 ###1.3.0
 Add multi dictinary
 ###1.2.0
