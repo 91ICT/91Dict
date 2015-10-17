@@ -1,5 +1,6 @@
 #include "support.h"
 #include "91ict.h"
+#include <stdio.h>
 
 #define UI_FILE "Dict.glade"
 
@@ -13,19 +14,12 @@ main(int argc, char** argv) {
 	BTA *tree_word, *tree_soundex, *tree_bookmark, *tree_suggests;
 	btinit();
 
-	if (check_file_exist("./data/FOLDOC-dict.data"))
-		tree_word = btopn("./data/FOLDOC-dict.data", 0, TRUE);
-	else {
-		tree_word = btcrt("./data/FOLDOC-dict.data", 0, TRUE);
-		FOLDOC_load_2_tree(tree_word, "FOLDOC");
-	}
-
-	if (check_file_exist("./data/FOLDOC-soundex.data"))
-		tree_soundex = btopn("./data/FOLDOC-soundex.data", 0, TRUE);
-	else {
-		tree_soundex = btcrt("./data/FOLDOC-soundex.data", 0, TRUE);
-		gen_soundex_db(tree_soundex, tree_word);
-	}
+	if (!check_file_exist("./data/FOLDOC-dict.data"))
+		system("./init_data");
+	tree_word = btopn("./data/FOLDOC-dict.data", 0, TRUE);
+	if (!check_file_exist("./data/FOLDOC-soundex.data"))
+		system("./init_data");
+	tree_soundex = btopn("./data/FOLDOC-soundex.data", 0, TRUE);
 
 	if (check_file_exist("./data/FOLDOC-bookmark.data"))
 		tree_bookmark = btopn("./data/FOLDOC-bookmark.data", 0, TRUE);

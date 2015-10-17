@@ -103,7 +103,7 @@ on_changed(GtkTreeSelection *treeselection, ChData *data) {
 		Buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(data->txt_meaning));
 		gtk_text_buffer_set_text(Buffer, "", -1);
 		if (btsel(data->tree_word, word, meaning, sizeof(meaning), &rsize) == 0) {
-			GtkTreeIter  iter;
+			//GtkTreeIter  iter;
 			// if(add_word_to_suggests(data, word)){
 			// 	gtk_list_store_append(data->entry_completion_list_store, &iter);
 			// 	gtk_list_store_set (data->entry_completion_list_store, &iter, 0, word, -1);

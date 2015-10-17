@@ -7,15 +7,6 @@
 // check exist file
 int check_file_exist(const char *file_name);
 
-// create db file from foldoc data file
-void FOLDOC_load_2_tree(BTA *tree, const char *foldoc_file);
-
-// create db file from foldoc dict file
-void dict_load_2_tree(BTA *tree, const char *dict_file);
-
-// Create soundex db file from word db file
-void gen_soundex_db(BTA *soundex_t, BTA *word_t);
-
 // change dictionary
 gboolean change_dict(gchar *name_dict, ChData *data);
 

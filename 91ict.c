@@ -16,152 +16,6 @@ int check_file_exist(const char *file_name) {
 		return 0;
 }
 
-// create db file from foldoc data file
-void FOLDOC_load_2_tree(BTA *tree, const char *foldoc_file) {
-	if (tree == NULL) {
-		fprintf(stderr, "ERROR: NULL value %s:%d\n", __FILE__, __LINE__);
-		exit(1);
-	}
-	FILE *f;
-	f = fopen(foldoc_file, "r");
-	if (f == NULL) {
-		fprintf(stderr, "ERROR: NULL value %s:%d\n", __FILE__, __LINE__);
-		exit(1);
-	}
-
-	int n = 0;
-	char word[100],
-	     mean[100000];
-	char temp[100];
-
-	while (!feof(f))
-	{
-		fgets(temp, 100, f);
-		if (temp[0] != '\t' && temp[0] != '\n')
-		{	// if word
-			if (n == 0) // if first time
-			{
-				n++;
-				strcpy(word, temp);
-				word[strlen(temp) - 1] = '\0';
-			}
-			else
-			{
-				mean[strlen(mean) - 1] = '\0';
-				btins(tree, word, mean, strlen(mean) + 1);
-				strcpy(mean, ""); // free
-				n++;
-				strcpy(word, temp);
-				word[strlen(temp) - 1] = '\0';
-			}
-		} // mean
-		else strcat(mean, temp);
-
-	}
-	mean[strlen(mean) - 1] = '\0';
-	btins(tree, word, mean, strlen(mean) + 1);
-
-	fclose(f);
-}
-
-// create db file from foldoc dict file
-void dict_load_2_tree(BTA *tree, const char *dict_file) {
-	if(strcmp(dict_file, "FOLDOC") == 0)
-		return FOLDOC_load_2_tree(tree, dict_file);
-	if (tree == NULL) {
-		fprintf(stderr, "ERROR: NULL value %s:%d\n", __FILE__, __LINE__);
-		exit(1);
-	}
-	FILE *f;
-
-	f = fopen(dict_file, "r");
-	if (f == NULL) {
-		fprintf(stderr, "ERROR: NULL value %s:%d\n", __FILE__, __LINE__);
-		exit(1);
-	}
-
-	int n = 0;
-	char word[100],
-	     mean[100000];
-	char temp[1000];
-	while (!feof(f))
-	{
-		fgets(temp, 1000, f);
-		if (temp[0] == '@')
-		{	// if word
-
-			if (n == 0) // if first time
-			{
-				n++;
-				strcat(mean, "\t");
-				sscanf(temp, "@%[^/\n]%[^\n]", word, mean);
-				strcat(mean, "\n");
-				word[strlen(word)] = '\0';
-			}
-			else
-			{
-				mean[strlen(mean) - 1] = '\0';
-				btins(tree, word, mean, strlen(mean) + 1);
-				strcpy(mean, "\n"); // free
-				n++;
-				sscanf(temp, "@%[^/\n]%[^\n]", word, mean);
-				strcat(mean, "\n");
-				if(word[strlen(word)-1] == ' ')
-					word[strlen(word)-1] = '\0';
-				else
-					word[strlen(word)] = '\0';
-			}
-		} // mean
-		else {			
-			if(temp[0] != '*')
-				strcat(mean, "\t\t");
-			else
-				strcat(mean, "\t");
-			strcat(mean, temp);
-		}
-	}
-	mean[strlen(mean) - 1] = '\0';
-	btins(tree, word, mean, strlen(mean) + 1);
-
-	fclose(f);
-}
-
-// Create soundex db file from word db file
-void gen_soundex_db(BTA *soundex_t, BTA *word_t) {
-	if (word_t == NULL ||  soundex_t == NULL) {
-		fprintf(stderr, "ERROR: NULL value %s:%d\n", __FILE__, __LINE__);
-		exit(1);
-	}
-
-	// set tree word position
-	btpos(word_t, ZSTART);
-
-	while (1) {
-		char word[200];
-		char mean[200000];
-		int size_mean_rev, size_series_word_rev;
-
-		if (btseln(word_t, word, mean, sizeof(mean), &size_mean_rev) == QNOKEY)
-			break;
-
-		char *soundex_str = soundex(word);
-		char series_word[200000];
-		if (btsel(soundex_t, soundex_str, series_word, sizeof(series_word), &size_series_word_rev) != 0) {
-			// Don't soundex_str on soundex_tree
-			btins(soundex_t, soundex_str, word, strlen(word) + 1);
-		} else {
-			// have soundex_str on soundex_tree
-			char separated[100] = ";";
-			strcat(separated, word);
-			strcat(series_word, separated);
-			btupd(soundex_t, soundex_str, series_word, strlen(series_word) + 1);
-		}
-		free(soundex_str);
-	}
-	btpos(word_t, ZSTART);
-
-}
-
 // change dictionary
 gboolean change_dict(gchar *name_dict, ChData *data) {
 	if (name_dict == NULL || data == NULL) {
@@ -181,14 +35,14 @@ gboolean change_dict(gchar *name_dict, ChData *data) {
 	if (check_file_exist("./data/"#name"-dict.data"))\
 		data->tree_word = btopn("./data/"#name"-dict.data", 0, TRUE);\
 	else {\
-		data->tree_word = btcrt("./data/"#name"-dict.data", 0, TRUE);\
-		dict_load_2_tree(data->tree_word, #name);\
+		system("./init_data");\
+		data->tree_word = btopn("./data/"#name"-dict.data", 0, TRUE);\
 	}\
 	if (check_file_exist("./data/"#name"-soundex.data"))\
 		data->tree_soundex = btopn("./data/"#name"-soundex.data", 0, TRUE);\
 	else {\
-		data->tree_soundex = btcrt("./data/"#name"-soundex.data", 0, TRUE);\
-		gen_soundex_db(data->tree_soundex, data->tree_word);\
+		system("./init_data");\
+		data->tree_soundex = btopn("./data/"#name"-soundex.data", 0, TRUE);\
 	}\
 	if (check_file_exist("./data/"#name"-bookmark.data"))\
 		data->tree_bookmark = btopn("./data/"#name"-bookmark.data", 0, TRUE);\
