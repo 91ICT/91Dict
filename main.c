@@ -14,14 +14,19 @@ main(int argc, char** argv) {
 	btinit();
 
 #define INIT_FILE_DATA(name) 	{ \
-	if (!check_file_exist("./data/"#name"-dict.data"))\
+	if (!check_file_exist("./data/"#name"-dict.data")) {\
 		tree_word = btcrt("./data/"#name"-dict.data", 0, FALSE);\
 		name##_load_2_tree(tree_word, #name);\
-		gen_soundex_db(tree_soundex, tree_word);\
+		if (check_file_exist("./data/"#name"-soundex.data"))\
+			tree_soundex = btopn("./data/"#name"-soundex.data", 0, FALSE);\
+		else {\
+			tree_soundex = btcrt("./data/"#name"-soundex.data", 0, FALSE);\
+			gen_soundex_db(tree_soundex, tree_word);\
+		}\
 		btcls(tree_soundex);\
 		btcls(tree_word);\
-	}
-
+	}\
+}
 	INIT_FILE_DATA(ENG_VIE);
 
 #undef INIT_FILE_DATA
@@ -93,7 +98,6 @@ main(int argc, char** argv) {
 #undef GW
 	CH_GET_OBJECT(builder, bookmark_list_store, GTK_LIST_STORE, data);
 	CH_GET_OBJECT(builder, list_word_list_store, GTK_LIST_STORE, data);
-	//CH_GET_OBJECT(builder, entry_completion_list_store, GTK_LIST_STORE, data);
 
 	CH_GET_OBJECT(builder, list_word_tree_view_selection, GTK_TREE_SELECTION, data);
 	CH_GET_OBJECT(builder, bookmark_tree_view_selection, GTK_TREE_SELECTION, data);
