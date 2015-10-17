@@ -14,7 +14,7 @@ main(int argc, char** argv) {
 	if (!check_file_exist("./data/"#name"-dict.data")) {\
 		printf("%s\n", "Begin create data for "#name);\
 		tree_word = btcrt("./data/"#name"-dict.data", 0, TRUE);\
-		name##_load_2_tree(tree_word, #name);\
+		dict_load_2_tree(tree_word, #name);\
 		if (check_file_exist("./data/"#name"-soundex.data"))\
 			tree_soundex = btopn("./data/"#name"-soundex.data", 0, TRUE);\
 		else {\

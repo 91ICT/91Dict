@@ -64,15 +64,17 @@ void FOLDOC_load_2_tree(BTA *tree, const char *foldoc_file) {
 	fclose(f);
 }
 
-// create db file from foldoc eng-vie
-void ENG_VN_load_2_tree(BTA *tree, const char *eng_vn_file) {
+// create db file from foldoc dict file
+void dict_load_2_tree(BTA *tree, const char *dict_file) {
+	if(strcmp(dict_file, "FOLDOC") == 0)
+		return FOLDOC_load_2_tree(tree, dict_file);
 	if (tree == NULL) {
 		fprintf(stderr, "ERROR: NULL value %s:%d\n", __FILE__, __LINE__);
 		exit(1);
 	}
 	FILE *f;
 
-	f = fopen(eng_vn_file, "r");
+	f = fopen(dict_file, "r");
 	if (f == NULL) {
 		fprintf(stderr, "ERROR: NULL value %s:%d\n", __FILE__, __LINE__);
 		exit(1);
@@ -82,68 +84,6 @@ void ENG_VN_load_2_tree(BTA *tree, const char *eng_vn_file) {
 	char word[100],
 	     mean[100000];
 	char temp[100];
-	fseek(f, 3, SEEK_SET);
-	while (!feof(f))
-	{
-		fgets(temp, 100, f);
-		if (temp[0] == '@')
-		{	// if word
-
-			if (n == 0) // if first time
-			{
-				n++;
-				strcat(mean, "\t");
-				sscanf(temp, "@%[^/\n]%[^\n]", word, mean);
-				strcat(mean, "\n");
-				word[strlen(word)] = '\0';
-			}
-			else
-			{
-				mean[strlen(mean) - 1] = '\0';
-				btins(tree, word, mean, strlen(mean) + 1);
-				strcpy(mean, "\n"); // free
-				n++;
-				sscanf(temp, "@%[^/\n]%[^\n]", word, mean);
-				strcat(mean, "\n");
-				if(word[strlen(word)-1] == ' ')
-					word[strlen(word)-1] = '\0';
-				else
-					word[strlen(word)] = '\0';
-			}
-		} // mean
-		else {			
-			if(temp[0] != '*')
-				strcat(mean, "\t\t");
-			else
-				strcat(mean, "\t");
-			strcat(mean, temp);
-		}
-	}
-	mean[strlen(mean) - 1] = '\0';
-	btins(tree, word, mean, strlen(mean) + 1);
-
-	fclose(f);
-}
-
-// create db file from foldoc vie_eng
-void VN_ENG_load_2_tree(BTA *tree, const char *vn_eng_file) {
-	if (tree == NULL) {
-		fprintf(stderr, "ERROR: NULL value %s:%d\n", __FILE__, __LINE__);
-		exit(1);
-	}
-	FILE *f;
-
-	f = fopen(vn_eng_file, "r");
-	if (f == NULL) {
-		fprintf(stderr, "ERROR: NULL value %s:%d\n", __FILE__, __LINE__);
-		exit(1);
-	}
-
-	int n = 0;
-	char word[100],
-	     mean[100000];
-	char temp[100];
-	fseek(f, 3, SEEK_SET);
 	while (!feof(f))
 	{
 		fgets(temp, 100, f);
@@ -242,7 +182,7 @@ gboolean change_dict(gchar *name_dict, ChData *data) {
 		data->tree_word = btopn("./data/"#name"-dict.data", 0, TRUE);\
 	else {\
 		data->tree_word = btcrt("./data/"#name"-dict.data", 0, TRUE);\
-		name##_load_2_tree(data->tree_word, #name);\
+		dict_load_2_tree(data->tree_word, #name);\
 	}\
 	if (check_file_exist("./data/"#name"-soundex.data"))\
 		data->tree_soundex = btopn("./data/"#name"-soundex.data", 0, TRUE);\
