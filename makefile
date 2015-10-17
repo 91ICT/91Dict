@@ -41,6 +41,5 @@ clean:
 	@echo "Clean Data Done"
 
 remake: clean all
-	@echo "Remake program Data"
 	
 reprofiling: clean profiling
