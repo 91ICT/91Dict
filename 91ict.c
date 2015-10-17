@@ -83,10 +83,10 @@ void dict_load_2_tree(BTA *tree, const char *dict_file) {
 	int n = 0;
 	char word[100],
 	     mean[100000];
-	char temp[100];
+	char temp[1000];
 	while (!feof(f))
 	{
-		fgets(temp, 100, f);
+		fgets(temp, 1000, f);
 		if (temp[0] == '@')
 		{	// if word
 

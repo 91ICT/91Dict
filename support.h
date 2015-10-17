@@ -51,5 +51,3 @@ struct _ChData
 };
 
 #endif /* __SUPPORT_H__ */
-
-
