@@ -27,7 +27,8 @@ main(int argc, char** argv) {
 		btcls(tree_word);\
 	}\
 }
-	INIT_FILE_DATA(ENG_VIE);
+	INIT_FILE_DATA(ENG_VN);
+	INIT_FILE_DATA(VN_ENG);
 
 #undef INIT_FILE_DATA
 

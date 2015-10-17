@@ -65,14 +65,75 @@ void FOLDOC_load_2_tree(BTA *tree, const char *foldoc_file) {
 }
 
 // create db file from foldoc eng-vie
-void ENG_VIE_load_2_tree(BTA *tree, const char *eng_vie_file) {
+void ENG_VN_load_2_tree(BTA *tree, const char *eng_vn_file) {
 	if (tree == NULL) {
 		fprintf(stderr, "ERROR: NULL value %s:%d\n", __FILE__, __LINE__);
 		exit(1);
 	}
 	FILE *f;
 
-	f = fopen(eng_vie_file, "r");
+	f = fopen(eng_vn_file, "r");
+	if (f == NULL) {
+		fprintf(stderr, "ERROR: NULL value %s:%d\n", __FILE__, __LINE__);
+		exit(1);
+	}
+
+	int n = 0;
+	char word[100],
+	     mean[100000];
+	char temp[100];
+	fseek(f, 3, SEEK_SET);
+	while (!feof(f))
+	{
+		fgets(temp, 100, f);
+		if (temp[0] == '@')
+		{	// if word
+
+			if (n == 0) // if first time
+			{
+				n++;
+				strcat(mean, "\t");
+				sscanf(temp, "@%[^/\n]%[^\n]", word, mean);
+				strcat(mean, "\n");
+				word[strlen(word)] = '\0';
+			}
+			else
+			{
+				mean[strlen(mean) - 1] = '\0';
+				btins(tree, word, mean, strlen(mean) + 1);
+				strcpy(mean, "\n"); // free
+				n++;
+				sscanf(temp, "@%[^/\n]%[^\n]", word, mean);
+				strcat(mean, "\n");
+				if(word[strlen(word)-1] == ' ')
+					word[strlen(word)-1] = '\0';
+				else
+					word[strlen(word)] = '\0';
+			}
+		} // mean
+		else {			
+			if(temp[0] != '*')
+				strcat(mean, "\t\t");
+			else
+				strcat(mean, "\t");
+			strcat(mean, temp);
+		}
+	}
+	mean[strlen(mean) - 1] = '\0';
+	btins(tree, word, mean, strlen(mean) + 1);
+
+	fclose(f);
+}
+
+// create db file from foldoc vie_eng
+void VN_ENG_load_2_tree(BTA *tree, const char *vn_eng_file) {
+	if (tree == NULL) {
+		fprintf(stderr, "ERROR: NULL value %s:%d\n", __FILE__, __LINE__);
+		exit(1);
+	}
+	FILE *f;
+
+	f = fopen(vn_eng_file, "r");
 	if (f == NULL) {
 		fprintf(stderr, "ERROR: NULL value %s:%d\n", __FILE__, __LINE__);
 		exit(1);
@@ -207,8 +268,13 @@ gboolean change_dict(gchar *name_dict, ChData *data) {
 		return TRUE;
 	}
 
-	if (strcmp(name_dict, "ENG-VIE") == 0) {
-		OPEN_DICT(ENG_VIE);
+	if (strcmp(name_dict, "ENG-VN") == 0) {
+		OPEN_DICT(ENG_VN);
+		return TRUE;
+	}
+
+	if (strcmp(name_dict, "VN-ENG") == 0) {
+		OPEN_DICT(VN_ENG);
 		return TRUE;
 	}
 

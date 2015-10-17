@@ -11,7 +11,10 @@ int check_file_exist(const char *file_name);
 void FOLDOC_load_2_tree(BTA *tree, const char *foldoc_file);
 
 // create db file from foldoc eng-vie
-void ENG_VIE_load_2_tree(BTA *tree, const char *eng_vie_file);
+void ENG_VN_load_2_tree(BTA *tree, const char *eng_vn_file);
+
+// create db file from foldoc vie-eng
+void VN_ENG_load_2_tree(BTA *tree, const char *vn_eng_file);
 
 // Create soundex db file from word db file
 void gen_soundex_db(BTA *soundex_t, BTA *word_t);

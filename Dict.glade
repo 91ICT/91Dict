@@ -594,7 +594,8 @@
                     <property name="active">0</property>
                     <items>
                       <item id="foldoc" translatable="yes">FOLDOC</item>
-                      <item id="en-vn" translatable="yes">ENG-VIE</item>
+                      <item id="en-vn" translatable="yes">ENG-VN</item>
+                      <item id="vn-en" translatable="yes">VN-ENG</item>
                     </items>
                     <signal name="changed" handler="on_dict_choose_changed" swapped="no"/>
                   </object>
