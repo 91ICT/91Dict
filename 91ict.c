@@ -239,26 +239,26 @@ gboolean change_dict(gchar *name_dict, ChData *data) {
 
 #define OPEN_DICT(name) 	{ \
 	if (check_file_exist("./data/"#name"-dict.data"))\
-		data->tree_word = btopn("./data/"#name"-dict.data", 0, FALSE);\
+		data->tree_word = btopn("./data/"#name"-dict.data", 0, TRUE);\
 	else {\
-		data->tree_word = btcrt("./data/"#name"-dict.data", 0, FALSE);\
+		data->tree_word = btcrt("./data/"#name"-dict.data", 0, TRUE);\
 		name##_load_2_tree(data->tree_word, #name);\
 	}\
 	if (check_file_exist("./data/"#name"-soundex.data"))\
-		data->tree_soundex = btopn("./data/"#name"-soundex.data", 0, FALSE);\
+		data->tree_soundex = btopn("./data/"#name"-soundex.data", 0, TRUE);\
 	else {\
-		data->tree_soundex = btcrt("./data/"#name"-soundex.data", 0, FALSE);\
+		data->tree_soundex = btcrt("./data/"#name"-soundex.data", 0, TRUE);\
 		gen_soundex_db(data->tree_soundex, data->tree_word);\
 	}\
 	if (check_file_exist("./data/"#name"-bookmark.data"))\
-		data->tree_bookmark = btopn("./data/"#name"-bookmark.data", 0, FALSE);\
+		data->tree_bookmark = btopn("./data/"#name"-bookmark.data", 0, TRUE);\
 	else {\
-		data->tree_bookmark = btcrt("./data/"#name"-bookmark.data", 0, FALSE);\
+		data->tree_bookmark = btcrt("./data/"#name"-bookmark.data", 0, TRUE);\
 	}\
 	if (check_file_exist("./data/"#name"-suggests.data"))\
-		data->tree_suggests = btopn("./data/"#name"-suggests.data", 0, FALSE);\
+		data->tree_suggests = btopn("./data/"#name"-suggests.data", 0, TRUE);\
 	else {\
-		data->tree_suggests = btcrt("./data/"#name"-suggests.data", 0, FALSE);\
+		data->tree_suggests = btcrt("./data/"#name"-suggests.data", 0, TRUE);\
 	}\
 }
 

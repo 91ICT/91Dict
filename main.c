@@ -15,12 +15,12 @@ main(int argc, char** argv) {
 
 #define INIT_FILE_DATA(name) 	{ \
 	if (!check_file_exist("./data/"#name"-dict.data")) {\
-		tree_word = btcrt("./data/"#name"-dict.data", 0, FALSE);\
+		tree_word = btcrt("./data/"#name"-dict.data", 0, TRUE);\
 		name##_load_2_tree(tree_word, #name);\
 		if (check_file_exist("./data/"#name"-soundex.data"))\
-			tree_soundex = btopn("./data/"#name"-soundex.data", 0, FALSE);\
+			tree_soundex = btopn("./data/"#name"-soundex.data", 0, TRUE);\
 		else {\
-			tree_soundex = btcrt("./data/"#name"-soundex.data", 0, FALSE);\
+			tree_soundex = btcrt("./data/"#name"-soundex.data", 0, TRUE);\
 			gen_soundex_db(tree_soundex, tree_word);\
 		}\
 		btcls(tree_soundex);\
@@ -33,29 +33,29 @@ main(int argc, char** argv) {
 #undef INIT_FILE_DATA
 
 	if (check_file_exist("./data/FOLDOC-dict.data"))
-		tree_word = btopn("./data/FOLDOC-dict.data", 0, FALSE);
+		tree_word = btopn("./data/FOLDOC-dict.data", 0, TRUE);
 	else {
-		tree_word = btcrt("./data/FOLDOC-dict.data", 0, FALSE);
+		tree_word = btcrt("./data/FOLDOC-dict.data", 0, TRUE);
 		FOLDOC_load_2_tree(tree_word, "FOLDOC");
 	}
 
 	if (check_file_exist("./data/FOLDOC-soundex.data"))
-		tree_soundex = btopn("./data/FOLDOC-soundex.data", 0, FALSE);
+		tree_soundex = btopn("./data/FOLDOC-soundex.data", 0, TRUE);
 	else {
-		tree_soundex = btcrt("./data/FOLDOC-soundex.data", 0, FALSE);
+		tree_soundex = btcrt("./data/FOLDOC-soundex.data", 0, TRUE);
 		gen_soundex_db(tree_soundex, tree_word);
 	}
 
 	if (check_file_exist("./data/FOLDOC-bookmark.data"))
-		tree_bookmark = btopn("./data/FOLDOC-bookmark.data", 0, FALSE);
+		tree_bookmark = btopn("./data/FOLDOC-bookmark.data", 0, TRUE);
 	else {
-		tree_bookmark = btcrt("./data/FOLDOC-bookmark.data", 0, FALSE);
+		tree_bookmark = btcrt("./data/FOLDOC-bookmark.data", 0, TRUE);
 	}
 
 	if (check_file_exist("./data/FOLDOC-suggests.data"))
-		tree_suggests = btopn("./data/FOLDOC-suggests.data", 0, FALSE);
+		tree_suggests = btopn("./data/FOLDOC-suggests.data", 0, TRUE);
 	else {
-		tree_suggests = btcrt("./data/FOLDOC-suggests.data", 0, FALSE);
+		tree_suggests = btcrt("./data/FOLDOC-suggests.data", 0, TRUE);
 	}
 
 	/* Init GTK+ */
