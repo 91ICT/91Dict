@@ -9,7 +9,7 @@ EXECUTABLE  = 91Dict
 # DATA          = foldoc-dict.data  foldoc-soundex.data bookmark.data suggests.data
 DATA_DIR	= data
 
-all: $(SRCS) $(EXECUTABLE)
+all: $(SRCS) $(EXECUTABLE) init_data
 
 debug: CFLAGS += -g -Wall
 debug: clean $(SRCS) $(EXECUTABLE)
@@ -23,6 +23,14 @@ $(EXECUTABLE): $(OBJS)
 
 .c.o:
 	$(CC) -I$(INC) $(CFLAGS) -c $< -o $@ -L$(LIB) $(LIBS)
+
+init_data:
+	$(CC) $(CFLAGS) -c init_data.c -I$(INC) -L$(LIB) $(LIBS)
+	$(CC) -I$(INC) $(CFLAGS) 91ict.o init_data.o -o init_data -L$(LIB) $(LIBS)
+	echo "Begin create data"
+	./init_data
+	echo "Create data done"
+	rm init_data init_data.o
 
 clean:
 	rm -rf *.o $(EXECUTABLE)
