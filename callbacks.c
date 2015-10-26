@@ -81,21 +81,25 @@ on_key_press_short_cut(GtkWidget *window, GdkEventKey *event, ChData *data) {
 G_MODULE_EXPORT void
 tab_switch_page_cb (GtkNotebook *notebook, GtkWidget *page, guint page_num, ChData *data) {
 
-	if (page_num == 0)
-		g_signal_emit_by_name ((gpointer) data->list_word_tree_view_selection, "changed");
-	else if (page_num == 1)
-		g_signal_emit_by_name ((gpointer) data->bookmark_tree_view_selection, "changed");
+	GtkTextBuffer *Buffer;
+	Buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(data->txt_meaning));
+	gtk_text_buffer_set_text(Buffer, "", -1);
+
+	if (page_num == 0) {
+		gtk_tree_selection_unselect_all(data->list_word_tree_view_selection);
+	} else if (page_num == 1) {
+		gtk_tree_selection_unselect_all(data->bookmark_tree_view_selection);
+	}
 }
 
 // for tree_view_selection
 G_MODULE_EXPORT void
-on_changed(GtkTreeSelection *treeselection, ChData *data) {
-
+list_word_tree_view_row_activated_cb (GtkTreeView *tree_view, GtkTreePath *path, GtkTreeViewColumn *column, ChData *data) {
 	GtkTreeIter iter;
 	GtkTreeModel *model;
 	gchar *word;
 
-	if (gtk_tree_selection_get_selected(treeselection, &model, &iter)) {
+	if (gtk_tree_selection_get_selected(data->list_word_tree_view_selection, &model, &iter)) {
 		gtk_tree_model_get(model, &iter, 0, &word,  -1);
 		int rsize;
 		char meaning[100000];
@@ -103,11 +107,33 @@ on_changed(GtkTreeSelection *treeselection, ChData *data) {
 		Buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(data->txt_meaning));
 		gtk_text_buffer_set_text(Buffer, "", -1);
 		if (btsel(data->tree_word, word, meaning, sizeof(meaning), &rsize) == 0) {
-			//GtkTreeIter  iter;
-			// if(add_word_to_suggests(data, word)){
-			// 	gtk_list_store_append(data->entry_completion_list_store, &iter);
-			// 	gtk_list_store_set (data->entry_completion_list_store, &iter, 0, word, -1);
-			// }
+			GtkTreeIter  iter;
+			if(add_word_to_suggests(data, word)){
+				gtk_list_store_append(data->entry_completion_list_store, &iter);
+				gtk_list_store_set (data->entry_completion_list_store, &iter, 0, word, -1);
+			}
+			gchar *mean_utf_8 = g_locale_to_utf8(meaning, -1, NULL, NULL, NULL);
+			gtk_text_buffer_set_text(Buffer, mean_utf_8, -1);
+		}
+		g_free(word);
+	}
+}
+
+// for tree_view_selection
+G_MODULE_EXPORT void
+on_bookmark_tree_view_row_activated_cb (GtkTreeView *tree_view, GtkTreePath *path, GtkTreeViewColumn *column, ChData *data) {
+	GtkTreeIter iter;
+	GtkTreeModel *model;
+	gchar *word;
+
+	if (gtk_tree_selection_get_selected(data->bookmark_tree_view_selection, &model, &iter)) {
+		gtk_tree_model_get(model, &iter, 0, &word,  -1);
+		int rsize;
+		char meaning[100000];
+		GtkTextBuffer *Buffer;
+		Buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(data->txt_meaning));
+		gtk_text_buffer_set_text(Buffer, "", -1);
+		if (btsel(data->tree_word, word, meaning, sizeof(meaning), &rsize) == 0) {
 			gchar *mean_utf_8 = g_locale_to_utf8(meaning, -1, NULL, NULL, NULL);
 			gtk_text_buffer_set_text(Buffer, mean_utf_8, -1);
 		}
