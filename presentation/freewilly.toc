@@ -1,0 +1,6 @@
+\beamer@sectionintoc {1}{Introduction}{3}{0}{1}
+\beamer@sectionintoc {2}{Overview and Usage}{4}{0}{2}
+\beamer@subsectionintoc {2}{1}{Shortcut}{6}{0}{2}
+\beamer@sectionintoc {3}{Data structure design}{7}{0}{3}
+\beamer@sectionintoc {4}{Data source and References}{8}{0}{4}
+\beamer@endinputifotherversion {3.24pt}

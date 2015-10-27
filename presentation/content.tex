@@ -55,27 +55,21 @@
 \end{itemize}
 \end{frame}
 
-
-
 \begin{frame}
   \frametitle{Overview and Usage}
-
-  \centering\begin{tikzpicture}
-
-    \node[anchor=south west,inner sep=0] (image) at (0,0) {\includegraphics[width=0.9\textwidth]{img.png}};
-    \begin{scope}[x={(image.south east)},y={(image.north west)}]
-      \draw (current bounding box.south west)    grid [step=0.05] (current bounding box.north east);
-      
-      % \draw[red,ultra thick,corners] (0.0,0.73) rectangle (0.185,0.78);
-      \node[draw,thick,minimum width=0.185,minimum height=1] at (0,0) (list) {};
-      % \node[inner sep=0] (list) {\draw[red,ultra thick,corners] (0.0,0.0) rectangle (0.185,0.676)};
-    \end{scope}
-  \end{tikzpicture}
+  \centering{\includegraphics[width=0.9\textwidth]{img.png}};
 \end{frame}
 
+\subsection{Shortcut}
 \begin{frame}
-  \frametitle{Overview and Usage}
-  cach su dung
+  \frametitle{Shortcut}
+  \begin{itemize}
+    \item $`ctrl + n`$       : Add new word
+    \item $`ctrl + e`$     : Edit current search word or selected word  
+    \item $`shift + delete`$ :  Delete current search word or selected word
+    \item $`ctrl + d`$    : bookmark word  
+    \item $`ctrl + delete`$ : delete bookmark selected word on bookmark 
+  \end{itemize}
 \end{frame}
 
 %------------------------------------------------

@@ -4,7 +4,7 @@
 ## Use
 ---
 ![](http://i.imgur.com/jd16av1.gif)
-### Short Cut
+### ShortCut
 
 `ctrl + n`	     : Add new word  
 `ctrl + e` 		 : Edit current search word or selected word  
