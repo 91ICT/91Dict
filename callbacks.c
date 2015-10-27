@@ -429,6 +429,10 @@ on_btn_del_clicked_del_dlg(GtkButton *btn_, ChData *data) {
 
 	/* Delete the word into the tree */
 	if (delete_word_from_dict(data, word)) {
+		gtk_list_store_clear(data->bookmark_list_store);
+		bookmark_init(data);
+		gtk_list_store_clear(data->entry_completion_list_store);
+		suggests_init(data);
 		status_dialog( (GtkWindow*) data->dlg_Delete, "Successfully!");
 	} else {
 		status_dialog( (GtkWindow*) data->dlg_Delete, "An error has occured!\nPlease try again");

@@ -156,7 +156,7 @@ gboolean add_word_to_dict(ChData *data, char *word, char *mean) {
 			if (btupd(data->tree_soundex, soundex_str, series_word, strlen(series_word) + 1) != 0)
 				return FALSE;
 		}
-		free(soundex_str);
+		g_free(soundex_str);
 
 		return TRUE;
 	}
@@ -282,7 +282,14 @@ gboolean delete_word_from_dict(ChData *data, char *word) {
 				return FALSE;
 		}
 end:
-		free(soundex_str);
+		g_free(soundex_str);
+		gint rev;
+		if (bfndky(data->tree_suggests, word, &rev) == 0) {
+			bdelky(data->tree_suggests, word);
+		}
+		if (bfndky(data->tree_bookmark, word, &rev) == 0) {
+			bdelky(data->tree_bookmark, word);
+		}
 		return TRUE;
 	}
 	return FALSE;
